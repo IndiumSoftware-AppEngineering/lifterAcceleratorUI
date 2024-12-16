@@ -3,3 +3,7 @@ node_modules/
 #Next JS ignored files
 /.next/
 /out/
+
+#Build Ignored files
+
+/build
