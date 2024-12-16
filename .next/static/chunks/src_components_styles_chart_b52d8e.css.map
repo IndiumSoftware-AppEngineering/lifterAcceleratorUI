@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/src/components/styles/chart.css"],"sourcesContent":[".recharts-default-legend {\r\n  /* Your desired styles here */\r\n  display: flex;\r\n  justify-content: space-between;\r\n  color: #959494;\r\n}\r\n.recharts-legend-item-text {\r\n  color: #959494 !important;\r\n}\r\n"],"names":[],"mappings":"AAAA;;;;;;AAMA"}},
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

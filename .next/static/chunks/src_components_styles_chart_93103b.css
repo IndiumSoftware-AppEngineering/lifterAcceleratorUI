@@ -1,0 +1,13 @@
+/* [project]/src/components/styles/chart.css [app-client] (css) */
+.recharts-default-legend {
+  display: flex;
+  justify-content: space-between;
+  color: #959494;
+}
+
+.recharts-legend-item-text {
+  color: #959494 !important;
+}
+
+
+/*# sourceMappingURL=src_components_styles_chart_93103b.css.map*/
