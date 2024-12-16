@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38">
+  <g id="Access_Icon" data-name="Access Icon" transform="translate(-43 -406)">
+    <g id="Group_18111" data-name="Group 18111">
+      <rect id="Rectangle_8376" data-name="Rectangle 8376" width="38" height="38" transform="translate(43 406)" fill="#fff" opacity="0"/>
+      <g id="Group_17889" data-name="Group 17889">
+        <g id="Group_17887" data-name="Group 17887" transform="translate(1.357 21.396)">
+          <g id="Rectangle_8348" data-name="Rectangle 8348" transform="translate(44.643 391.605)" fill="none" stroke="#c9c9c9" stroke-width="3">
+            <rect width="28" height="28" rx="6" stroke="none"/>
+            <rect x="1.5" y="1.5" width="25" height="25" rx="4.5" fill="none"/>
+          </g>
+          <path id="Path_10620" data-name="Path 10620" d="M-18.936.685H6.325l1.753,23.1H0s.406-9.425-4.787-13.193-14.15-1.879-14.15-1.879Z" transform="translate(68.534 387)" fill="#021f46"/>
+        </g>
+        <g id="Group_17888" data-name="Group 17888" transform="translate(3.777 12.779)">
+          <path id="Union_5" data-name="Union 5" d="M0,16.43,7.839,8.792a6.15,6.15,0,1,1,3.689,3.231l-1.5,1.459-2.225.35-.2,2.061-2.3.537-.2,1.841-.9.984L0,19.531Z" transform="translate(51.441 398.456)" fill="none" stroke="#c9c9c9" stroke-width="2"/>
+          <circle id="Ellipse_131" data-name="Ellipse 131" cx="1.855" cy="1.855" r="1.855" transform="translate(63.125 402.578)" fill="#e4e4e4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
