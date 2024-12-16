@@ -2,6 +2,7 @@
 import AnimatedSideNav from '@/components/common/animatedSideNav';
 import ApplicationsCard from '@/components/common/applicationCountCard';
 import { RightDrawer } from '@/components/common/drawer';
+import { DrawerContent } from '@/app/dashboard/components/document-management/drawerContent';
 import FilterComponents from '@/components/common/filterComponents';
 import PieChartComponent from '@/components/common/pieChartComponent';
 import ProjectStatusCard from '@/components/common/projectStatusCard';
@@ -209,7 +210,7 @@ export default function Page() {
         isOpen={isCreateNewProject}
         toggleDrawer={handleClickNewProject}
       >
-        <p>Safrin</p>
+        <DrawerContent />
       </RightDrawer>
     </div>
   );
