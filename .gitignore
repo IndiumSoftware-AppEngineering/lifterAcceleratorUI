@@ -1,1 +1,5 @@
+# dependencies
 node_modules/
+#Next JS ignored files
+/.next/
+/out/
