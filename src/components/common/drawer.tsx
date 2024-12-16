@@ -23,7 +23,7 @@ export function RightDrawer({ children, isOpen, toggleDrawer }: drawerProps) {
       </div>
       {isOpen && (
         <div
-          className='fixed inset-0 z-30 bg-black bg-opacity-5'
+          className='fixed inset-0 z-20 bg-black bg-opacity-5'
           onClick={toggleDrawer}
         />
       )}
