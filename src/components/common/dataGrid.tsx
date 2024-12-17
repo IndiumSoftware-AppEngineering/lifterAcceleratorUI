@@ -34,7 +34,7 @@ export function DataGrid<TData, TValue>({
   return (
     <div className='rounded-md border'>
       <Table>
-        <TableHeader className='bg-slate-100'>
+        <TableHeader className="bg-[#F7F8F9]">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
