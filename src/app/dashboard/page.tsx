@@ -6,7 +6,9 @@ import FilterComponents from '@/components/common/filterComponents';
 import PieChartComponent from '@/components/common/pieChartComponent';
 import ProjectStatusCard from '@/components/common/projectStatusCard';
 import TopBar from '@/components/common/topBar';
+
 import React, { useState } from 'react';
+import WebScrapper from './components/webScrapper';
 
 export default function Page() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
@@ -209,7 +211,8 @@ export default function Page() {
         isOpen={isCreateNewProject}
         toggleDrawer={handleClickNewProject}
       >
-        <p>Safrin</p>
+       
+        <WebScrapper/>
       </RightDrawer>
     </div>
   );
