@@ -62,7 +62,7 @@ export default function WebScrapper() {
       <div>
         {!showForm ? (
           <>
-            <div className="justify-between items-center flex flex-col md:flex-row justify-between items-center mb-4">
+            <div className="justify-between items-center flex flex-col md:flex-row mb-4">
               <h2 className="text-lg font-semibold">Domain Lists</h2>
               <div className="flex flex-col md:flex-row gap-2 mt-4 md:mt-0">
                 <button className="bg-white text-[#172B9E] px-4 py-2 mr-2 rounded border border-[#172B9E] font-semibold">
