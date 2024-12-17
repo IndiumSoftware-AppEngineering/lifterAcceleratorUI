@@ -19,7 +19,7 @@ export function RightDrawer({ children, isOpen, toggleDrawer }: drawerProps) {
         )}
         style={{ width: '40%' }}
       >
-        <div className='p-6'>{children}</div>
+        <div>{children}</div>
       </div>
       {isOpen && (
         <div

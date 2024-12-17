@@ -4,9 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 
-import LifterIcon from '../../../public/images/Lifter Temporary Icon.svg';
-import DashboardIcon from '../../../public/images/Dashboard Icon.svg';
-import AccessIcon from '../../../public/images/Access Icon.svg';
+import LifterIcon from '../../../public/assets/Lifter Temporary Icon.svg';
+import DashboardIcon from '../../../public/assets/Dashboard Icon.svg';
+import AccessIcon from '../../../public/assets/Access Icon.svg';
 
 interface NavItem {
   href: string;
