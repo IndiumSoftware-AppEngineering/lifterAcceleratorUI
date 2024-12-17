@@ -1,9 +1,20 @@
 .recharts-default-legend {
-  /* Your desired styles here */
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   color: #959494;
 }
+
+.recharts-legend-item {
+  display: flex;
+  align-items: center;
+}
+
+.recharts-legend-item-circle {
+  margin-right: 8px; /* Space between the circle and the label */
+}
+
+/* Override text color for legends */
 .recharts-legend-item-text {
   color: #959494 !important;
 }

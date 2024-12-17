@@ -111,7 +111,7 @@ export default function LoginForm() {
             `}
           >
             <Image
-              src='/images/logo.svg'
+              src='/assets/logo.svg'
               width={60}
               height={60}
               alt='logo'

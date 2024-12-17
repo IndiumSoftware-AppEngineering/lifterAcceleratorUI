@@ -6,15 +6,24 @@ import FilterComponents from '@/components/common/filterComponents';
 import PieChartComponent from '@/components/common/pieChartComponent';
 import ProjectStatusCard from '@/components/common/projectStatusCard';
 import TopBar from '@/components/common/topBar';
-
 import React, { useState } from 'react';
-import WebScrapper from './components/webScrapper';
+import { CreateProjectDrawerContent } from './components/projectCreation/drawerContent';
 
 export default function Page() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
 
   const handleClickNewProject = () => {
     setIsCreateNewProject(!isCreateNewProject);
+  };
+
+  const handleCreateProject = (data: {
+    name: string;
+    id: string;
+    description: string;
+    status: string;
+  }) => {
+    console.log('Creating project:', data);
+    // handleClickNewProject();
   };
   const cardsData = [
     {
@@ -30,13 +39,13 @@ export default function Page() {
         { name: 'J', color: 'bg-blue-500' },
       ],
       icons: [
-        { name: 'PDF', link: '/pdf-link', iconPath: '/images/pdf.png' },
-        { name: 'GitHub', link: '/github-link', iconPath: '/images/git.png' },
-        { name: 'Web', link: '/web-link', iconPath: '/images/web.png' },
+        { name: 'PDF', link: '/pdf-link', iconPath: '/assets/pdf.png' },
+        { name: 'GitHub', link: '/github-link', iconPath: '/assets/git.png' },
+        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
         {
           name: 'OpenAI',
           link: '/openai-link',
-          iconPath: '/images/chat.png',
+          iconPath: '/assets/chat.png',
         },
       ],
     },
@@ -52,11 +61,11 @@ export default function Page() {
         { name: 'J', color: 'bg-blue-500' },
       ],
       icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/images/web.png' },
+        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
         {
           name: 'OpenAI',
           link: '/openai-link',
-          iconPath: '/images/chat.png',
+          iconPath: '/assets/chat.png',
         },
       ],
     },
@@ -72,11 +81,11 @@ export default function Page() {
         { name: 'K', color: 'bg-green-500' },
       ],
       icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/images/web.png' },
+        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
         {
           name: 'OpenAI',
           link: '/openai-link',
-          iconPath: '/images/chat.png',
+          iconPath: '/assets/chat.png',
         },
       ],
     },
@@ -91,8 +100,8 @@ export default function Page() {
         { name: 'T', color: 'bg-yellow-500' },
       ],
       icons: [
-        { name: 'PDF', link: '/pdf-link', iconPath: '/images/pdf.png' },
-        { name: 'GitHub', link: '/github-link', iconPath: '/images/git.png' },
+        { name: 'PDF', link: '/pdf-link', iconPath: '/assets/pdf.png' },
+        { name: 'GitHub', link: '/github-link', iconPath: '/assets/git.png' },
       ],
     },
     {
@@ -106,11 +115,11 @@ export default function Page() {
         { name: 'D', color: 'bg-teal-500' },
       ],
       icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/images/web.png' },
+        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
         {
           name: 'OpenAI',
           link: '/openai-link',
-          iconPath: '/images/chat.png',
+          iconPath: '/assets/chat.png',
         },
       ],
     },
@@ -125,8 +134,8 @@ export default function Page() {
         { name: 'F', color: 'bg-cyan-500' },
       ],
       icons: [
-        { name: 'PDF', link: '/pdf-link', iconPath: '/images/pdf.png' },
-        { name: 'GitHub', link: '/github-link', iconPath: '/images/git.png' },
+        { name: 'PDF', link: '/pdf-link', iconPath: '/assets/pdf.png' },
+        { name: 'GitHub', link: '/github-link', iconPath: '/assets/git.png' },
       ],
     },
     {
@@ -141,11 +150,11 @@ export default function Page() {
         { name: 'H', color: 'bg-amber-500' },
       ],
       icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/images/web.png' },
+        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
         {
           name: 'OpenAI',
           link: '/openai-link',
-          iconPath: '/images/chat.png',
+          iconPath: '/assets/chat.png',
         },
       ],
     },
@@ -168,28 +177,31 @@ export default function Page() {
               {/* <div className='bg-white p-6 rounded-lg shadow w-graph_container_width h-graph_container_height'> */}
               {/* ApplicationsCard component will go here */}
               <ApplicationsCard
-                totalCount={0}
-                upToDateCount={0}
-                needUpdateCount={0}
+                totalCount={94}
+                upToDateCount={70}
+                needUpdateCount={24}
               />
               {/* </div> */}
               {/* <div className='bg-white p-6 rounded-lg shadow w-graph_container_width h-graph_container_height'> */}
               {/* ComplianceStatus component will go here */}
               <PieChartComponent
-                data={[]}
-                title={''}
-                showPercentage={false}
-                showLegend={false}
+                data={[
+                  { name: 'Non-Compliant', value: 30, color: '#eb737e' },
+                  { name: 'Compliant', value: 70, color: '#53af69' },
+                ]}
+                title={'Compliance Status'}
+                showPercentage={true}
+                showLegend={true}
               />
               {/* </div> */}
               {/* <div className='bg-white p-6 rounded-lg shadow w-graph_container_width h-graph_container_height'> */}
               {/* ModernisationProgress component will go here */}
               {/* </div> */}
               <PieChartComponent
-                data={[]}
-                title={''}
-                showPercentage={false}
-                showLegend={false}
+                data={[{ name: 'Modernised', value: 70, color: '#6e5ed8' }]}
+                title={'Modernisation Progress'}
+                showPercentage={true}
+                showLegend={true}
               />
             </div>
 
@@ -211,8 +223,10 @@ export default function Page() {
         isOpen={isCreateNewProject}
         toggleDrawer={handleClickNewProject}
       >
-       
-        <WebScrapper/>
+        <CreateProjectDrawerContent
+          onSubmit={handleCreateProject}
+          onCancel={handleClickNewProject}
+        />
       </RightDrawer>
     </div>
   );

@@ -36,7 +36,7 @@ const ProjectOverviewCard: React.FC<DynamicCardProps> = ({
   const keyWidth = maxKeyLength * 9 + 20; // Add some padding
 
   return (
-    <div className='bg-white shadow-md rounded-lg overflow-hidden  flex flex-col mt-3'>
+    <div className='bg-white shadow-md rounded-lg overflow-hidden  h-[260px] flex flex-col mt-3'>
       <div className='relative p-4 flex items-center'>
         <img src={imageUrl} alt='Logo' className='w-7 h-7 object-cover mr-4' />
         <h2 className='text-lg font-bold text-black'>{title}</h2>

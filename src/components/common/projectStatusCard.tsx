@@ -137,7 +137,7 @@ const ProjectStatusCard: React.FC<CardProps> = ({
               </div>
             ))}
             <Image
-              src='/images/plus.svg'
+              src='/assets/plus.svg'
               alt='plus icon'
               width={16}
               height={16}
