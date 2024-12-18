@@ -1,12 +1,4 @@
-interface FormData {
-  name: string;
-  id: string;
-}
-
-interface FormErrors {
-  name?: string;
-  id?: string;
-}
+import { FormData, FormErrors } from "../../_constants/type";
 
 export const validateForm = (
   formData: FormData,

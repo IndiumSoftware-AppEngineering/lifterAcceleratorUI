@@ -7,18 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-interface StatusDropdownProps {
-  status: string;
-  setFormData: (
-    formData: React.SetStateAction<{
-      name: string;
-      id: string;
-      description: string;
-      status: string;
-    }>
-  ) => void;
-}
+import { StatusDropdownProps } from '../../_constants/type';
 
 export function StatusDropdown({ status, setFormData }: StatusDropdownProps) {
   return (

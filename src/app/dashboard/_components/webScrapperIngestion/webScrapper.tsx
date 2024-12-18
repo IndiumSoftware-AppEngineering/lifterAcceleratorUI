@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { domainData } from "./dummyData";
+import { domainData } from "../../_constants/dummy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { DataGrid } from "@/components/common/dataGrid";
 

@@ -3,7 +3,7 @@ import AnimatedSideNav from "@/components/common/animatedSideNav"; // Nav Bar
 import TopBar from "@/components/common/topBar"; // Top Bar
 import ProjectOverviewCard from "@/components/common/projectOverviewCard"; // Project Overview Card
 import React, { useState } from "react";
-import ProjectNavigation from "./components/pageNavigation";
+import ProjectNavigation from "./_components/pageNavigation";
 import MicroservicesCard from "@/components/common/recommendationCard";
 import { RightDrawer } from "@/components/common/drawer";
 
