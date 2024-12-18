@@ -2,10 +2,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { dropdownOptions } from "@/lib/constants";
+import { DROPDOWN_OPTIONS } from "../../_constants/constants";
 import { RenderFields } from "./renderFields";
 import { Button } from "@/components/ui/button";
-import { dropDownMenuProps } from "./documentIngestionModel";
+import { dropDownMenuProps } from "../../_constants/type";
 import { validateField,validateForm } from "./validationUtils";
 
 export function DropdownMenuOptions({
@@ -18,7 +18,7 @@ export function DropdownMenuOptions({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const getSelectedOptionLabel = () =>
-    dropdownOptions.find((option) => option.id === selectedOption)?.label ||
+    DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.label ||
     "Choose an Option";
 
   const handleFieldChange = (field: string, value: string) => {
@@ -33,7 +33,7 @@ export function DropdownMenuOptions({
 
   const handleSubmit = () => {
     const selectedFields =
-      dropdownOptions.find((option) => option.id === selectedOption)?.fields ||
+      DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.fields ||
       [];
 
     const newErrors = validateForm(selectedFields, formData);
@@ -47,7 +47,7 @@ export function DropdownMenuOptions({
 
   const isFormValid = () => {
     const selectedFields =
-      dropdownOptions.find((option) => option.id === selectedOption)?.fields ||
+      DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.fields ||
       [];
 
     return selectedFields.every((field) =>
@@ -60,7 +60,7 @@ export function DropdownMenuOptions({
     setFormErrors({});
 
     const selectedOptionFields =
-      dropdownOptions.find((option) => option.id === selectedOption)?.fields ||
+      DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.fields ||
       [];
 
     const newFormData: Record<string, string> = {};
@@ -103,7 +103,7 @@ export function DropdownMenuOptions({
           {dropdownVisible && (
             <div className="absolute z-10 w-full mt-1 bg-white border rounded shadow-sm">
               <ul className="space-y-2 py-2">
-                {dropdownOptions.map((option) => (
+                {DROPDOWN_OPTIONS.map((option) => (
                   <li
                     key={option.id}
                     onClick={() => onOptionSelect(option.id)}
@@ -132,7 +132,7 @@ export function DropdownMenuOptions({
             <RenderFields
               key={selectedOption}
               fields={
-                dropdownOptions.find((option) => option.id === selectedOption)
+                DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)
                   ?.fields || []
               }
               formErrors={formErrors}

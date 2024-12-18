@@ -7,14 +7,22 @@ import PieChartComponent from '@/components/common/pieChartComponent';
 import ProjectStatusCard from '@/components/common/projectStatusCard';
 import TopBar from '@/components/common/topBar';
 import React, { useState } from 'react';
-import { CreateProjectDrawerContent } from './components/projectCreation/drawerContent';
+import { CreateProjectDrawerContent } from './_components/projectCreation/drawerContent';
+import { cardsData } from '@/app/dashboard/_constants/dummy';
+import { ArtifactIngestionDrawerContent } from './_components/gitIngestion/drawerContent';
 
 export default function Page() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
+  const [drawerContent, setDrawerContent] = useState<'createProject' | 'addArtifacts' | null>('createProject');
 
   const handleClickNewProject = () => {
     setIsCreateNewProject(!isCreateNewProject);
   };
+
+  const handleAddArtifacts = () => {
+    setDrawerContent('addArtifacts');
+  };
+
 
   const handleCreateProject = (data: {
     name: string;
@@ -23,142 +31,7 @@ export default function Page() {
     status: string;
   }) => {
     console.log('Creating project:', data);
-    // handleClickNewProject();
   };
-  const cardsData = [
-    {
-      id: '11011',
-      title: 'Natural Language Processing',
-      status: 'Active',
-      date: '12-11-2024',
-      extractionStatus: 'Extraction Completed',
-      avatars: [
-        { name: 'L', color: 'bg-purple-500' },
-        { name: 'C', color: 'bg-green-500' },
-        { name: 'A', color: 'bg-orange-500' },
-        { name: 'J', color: 'bg-blue-500' },
-      ],
-      icons: [
-        { name: 'PDF', link: '/pdf-link', iconPath: '/assets/pdf.png' },
-        { name: 'GitHub', link: '/github-link', iconPath: '/assets/git.png' },
-        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
-        {
-          name: 'OpenAI',
-          link: '/openai-link',
-          iconPath: '/assets/chat.png',
-        },
-      ],
-    },
-    {
-      id: '13564',
-      title: 'Predictive Maintenance System',
-      status: 'Inactive',
-      date: '12-11-2024',
-      extractionStatus: 'Extraction in Progress',
-      progress: 60,
-      avatars: [
-        { name: 'A', color: 'bg-orange-500' },
-        { name: 'J', color: 'bg-blue-500' },
-      ],
-      icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
-        {
-          name: 'OpenAI',
-          link: '/openai-link',
-          iconPath: '/assets/chat.png',
-        },
-      ],
-    },
-    {
-      id: '67895',
-      title: 'Image Recognition Solution',
-      status: 'Active',
-      date: '12-11-2024',
-      extractionStatus: 'Extraction in Progress',
-      progress: 45,
-      avatars: [
-        { name: 'M', color: 'bg-blue-500' },
-        { name: 'K', color: 'bg-green-500' },
-      ],
-      icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
-        {
-          name: 'OpenAI',
-          link: '/openai-link',
-          iconPath: '/assets/chat.png',
-        },
-      ],
-    },
-    {
-      id: '98765',
-      title: 'Blockchain Security Framework',
-      status: 'Active',
-      date: '12-11-2024',
-      extractionStatus: 'Approval Pending',
-      avatars: [
-        { name: 'S', color: 'bg-red-500' },
-        { name: 'T', color: 'bg-yellow-500' },
-      ],
-      icons: [
-        { name: 'PDF', link: '/pdf-link', iconPath: '/assets/pdf.png' },
-        { name: 'GitHub', link: '/github-link', iconPath: '/assets/git.png' },
-      ],
-    },
-    {
-      id: '54321',
-      title: 'Quantum Computing Research',
-      status: 'Inactive',
-      date: '12-11-2024',
-      extractionStatus: 'Feedback Needed',
-      avatars: [
-        { name: 'R', color: 'bg-pink-500' },
-        { name: 'D', color: 'bg-teal-500' },
-      ],
-      icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
-        {
-          name: 'OpenAI',
-          link: '/openai-link',
-          iconPath: '/assets/chat.png',
-        },
-      ],
-    },
-    {
-      id: '12345',
-      title: 'Autonomous Vehicle System',
-      status: 'Active',
-      date: '12-11-2024',
-      extractionStatus: 'Extraction Failed',
-      avatars: [
-        { name: 'E', color: 'bg-indigo-500' },
-        { name: 'F', color: 'bg-cyan-500' },
-      ],
-      icons: [
-        { name: 'PDF', link: '/pdf-link', iconPath: '/assets/pdf.png' },
-        { name: 'GitHub', link: '/github-link', iconPath: '/assets/git.png' },
-      ],
-    },
-    {
-      id: '56789',
-      title: 'Smart Home Automation',
-      status: 'Inactive',
-      date: '12-11-2024',
-      extractionStatus: 'Extraction in Progress',
-      progress: 80,
-      avatars: [
-        { name: 'G', color: 'bg-lime-500' },
-        { name: 'H', color: 'bg-amber-500' },
-      ],
-      icons: [
-        { name: 'Web', link: '/web-link', iconPath: '/assets/web.png' },
-        {
-          name: 'OpenAI',
-          link: '/openai-link',
-          iconPath: '/assets/chat.png',
-        },
-      ],
-    },
-  ];
 
   return (
     <div className='flex h-screen bg-gray-100 w-[-webkit-fill-available]'>
@@ -174,16 +47,11 @@ export default function Page() {
           <div className='p-6 space-y-6'>
             {/* Top section with three cards */}
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-              {/* <div className='bg-white p-6 rounded-lg shadow w-graph_container_width h-graph_container_height'> */}
-              {/* ApplicationsCard component will go here */}
               <ApplicationsCard
                 totalCount={94}
                 upToDateCount={70}
                 needUpdateCount={24}
               />
-              {/* </div> */}
-              {/* <div className='bg-white p-6 rounded-lg shadow w-graph_container_width h-graph_container_height'> */}
-              {/* ComplianceStatus component will go here */}
               <PieChartComponent
                 data={[
                   { name: 'Non-Compliant', value: 30, color: '#eb737e' },
@@ -193,10 +61,6 @@ export default function Page() {
                 showPercentage={true}
                 showLegend={true}
               />
-              {/* </div> */}
-              {/* <div className='bg-white p-6 rounded-lg shadow w-graph_container_width h-graph_container_height'> */}
-              {/* ModernisationProgress component will go here */}
-              {/* </div> */}
               <PieChartComponent
                 data={[{ name: 'Modernised', value: 70, color: '#6e5ed8' }]}
                 title={'Modernisation Progress'}
@@ -223,10 +87,16 @@ export default function Page() {
         isOpen={isCreateNewProject}
         toggleDrawer={handleClickNewProject}
       >
-        <CreateProjectDrawerContent
-          onSubmit={handleCreateProject}
-          onCancel={handleClickNewProject}
-        />
+        {drawerContent === 'createProject' && (
+          <CreateProjectDrawerContent
+            onSubmit={handleCreateProject}
+            onCancel={() => setIsCreateNewProject(false)}
+            handleAddArtifacts={handleAddArtifacts}
+          />
+        )}
+        {drawerContent === 'addArtifacts' && (
+          <ArtifactIngestionDrawerContent/>
+        )}
       </RightDrawer>
     </div>
   );
