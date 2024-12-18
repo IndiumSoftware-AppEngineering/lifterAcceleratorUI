@@ -1,13 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-
-interface SuccessModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  successIcon: string;
-}
+import { SuccessModalProps } from '../../_constants/type';
 
 export function SuccessModal({
   isOpen,

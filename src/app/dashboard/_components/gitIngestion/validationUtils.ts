@@ -1,3 +1,5 @@
+import { URL_PATTERN } from "../../_constants/constants";
+
 export const validateField = (
     field: string,
     value: string,
@@ -31,6 +33,6 @@ export const validateField = (
   };
   
   const isValidUrl = (url: string): boolean => {
-    const urlPattern = /^(https?:\/\/[^\s$.?#].[^\s]*)$/;
-    return urlPattern.test(url);
+    
+    return URL_PATTERN.test(url);
   };

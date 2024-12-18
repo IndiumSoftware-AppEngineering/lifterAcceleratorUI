@@ -6,14 +6,15 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { ArtifactSelector } from "./artifactSelector";
 import { DropdownMenuOptions } from "./dropdownMenuOptions";
-export function DrawerContent() {
+
+export function ArtifactIngestionDrawerContent() {
   const [status, setStatus] = useState<"Active" | "Inactive">("Active");
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const toggleStatus = () =>
     setStatus((prev) => (prev === "Active" ? "Inactive" : "Active"));
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col h-screen bg-white p-6">
       <div className="flex-shrink-0 p-1 border-b pt-0">
         <div className="flex justify-between items-center">
           <h2 className="text-base font-semibold">Create New Project</h2>
@@ -38,7 +39,7 @@ export function DrawerContent() {
             <MoreVertIcon className="w-4 h-4 text-gray-600 cursor-pointer" />
           </Button>
         </div>
-        <div className="mb-2">
+        {/* <div className="mb-2">
           <div className="flex items-center gap-1">
             <Button variant="ghost" size="icon" className="text-gray-700">
               <KeyboardArrowLeftIcon className="w-4 h-4 text-gray-600 cursor-pointer" />
@@ -47,7 +48,7 @@ export function DrawerContent() {
               Project Details
             </h3>
           </div>
-        </div>
+        </div> */}
         <ArtifactSelector
           selectedIcon={selectedIcon}
           onIconClick={setSelectedIcon}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { RenderFieldsProps } from "./documentIngestionModel";
+import { RenderFieldsProps } from "../../_constants/type";
 
 export const RenderFields: React.FC<RenderFieldsProps> = ({
   fields,
