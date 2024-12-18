@@ -10,22 +10,12 @@ import { StatusDropdown } from './statusdropdown';
 import { FormField } from './formField';
 import { SuccessModal } from './artifactModal';
 import SuccessIcon from '../../../../../public/assets/Group 18081.svg';
-
-interface CreateProjectDrawerContentProps {
-  onSubmit: (data: FormData) => void;
-  onCancel: () => void;
-}
-
-interface FormData {
-  name: string;
-  id: string;
-  description: string;
-  status: string;
-}
+import { CreateProjectDrawerContentProps, FormData } from '../../_constants/type';
 
 export function CreateProjectDrawerContent({
   onSubmit,
   onCancel,
+  handleAddArtifacts,
 }: CreateProjectDrawerContentProps) {
   const [formData, setFormData] = React.useState<FormData>({
     name: '',
@@ -77,13 +67,6 @@ export function CreateProjectDrawerContent({
           <div className='flex items-center gap-2'>
             <h2 className='text-lg font-semibold'>Create New Project</h2>
           </div>
-
-          <Image
-            src={closeDrawerIcon}
-            alt={''}
-            onClick={onCancel}
-            className='cursor-pointer'
-          />
         </div>
       </div>
       <div className='flex items-center justify-between rounded-sm bg-[#F7F7F7] p-2'>
@@ -160,7 +143,10 @@ export function CreateProjectDrawerContent({
         <SuccessModal
           isOpen={showSuccessModal}
           onClose={handleModalClose}
-          onConfirm={handleModalClose}
+          onConfirm={() => {
+            handleModalClose(); // Close the modal
+            handleAddArtifacts(); // Switch to "Add Artifacts" content
+          }}
           successIcon={SuccessIcon}
         />
       )}
