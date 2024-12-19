@@ -1,3 +1,5 @@
+import { ChangeEvent, FocusEvent } from "react";
+
 export interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -71,4 +73,72 @@ export interface RenderFieldsProps {
   formErrors: Record<string, string>;
   onChange: (field: string, value: string) => void;
   onBlur: (field: string, value: string) => void;
+}
+export interface Registration {
+  id: bigint;
+  username: string;
+  surname: string;
+  email: string;
+  password: string;
+  phone: string;
+  created_on: Date;
+  modified_by: string;
+  modified_on: Date;
+}
+
+export interface ForgotPasswordPayload {
+  email: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+export interface SignupPayload {
+  username: string;
+  surname: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+export interface InputFieldProps {
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string;
+  error: string;
+  showPasswordToggle?: boolean;
+  showForgotPassword?: boolean;
+  isTouched: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (e: FocusEvent<HTMLInputElement>) => void;
+  togglePasswordVisibility?: () => void;
+  toggleForgotPassword?: () => void;
+}
+export interface SignInButtonProps {
+  type: 'button' | 'submit' | 'reset';
+  isLogin: boolean;
+  isForgotPassword: boolean;
+  isResetPasswordEnabled: boolean;
+}
+export interface SignUpButtonProps {
+  isAgreed: boolean;
+  onClick?: () => void;
+}
+export interface InputRegisterFieldProps {
+  label: string;
+  type: string;
+  name: string;
+  value: string;
+  error?: string | null;
+  showPasswordToggle?: boolean;
+  isTouched?: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  togglePasswordVisibility?: () => void;
+}
+export interface TermsCheckboxProps {
+  isAgreed: boolean;
+  onChange: (checked: boolean) => void;
 }
