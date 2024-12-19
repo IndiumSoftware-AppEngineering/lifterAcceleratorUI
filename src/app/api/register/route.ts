@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { SignupPayload } from '../dashboard/_constants/type';
+import { SignupPayload } from '../../dashboard/_constants/type';
 
 export async function POST(req: NextRequest) {
   try {

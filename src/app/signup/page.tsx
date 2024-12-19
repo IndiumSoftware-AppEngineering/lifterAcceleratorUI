@@ -7,7 +7,7 @@ import {
   EMAIL_REGEX,
   PASSWORD_MIN_LENGTH,
 } from "../dashboard/_constants/constants";
-import { registerUser } from "@/components/apiintegrations/register";
+import { registerUser } from "@/app/signup/_api/register";
 import SignUpButton from "./signUpButton";
 import InputField from "./inputField";
 import TermsCheckbox from "./termsCheckbox";
@@ -111,7 +111,7 @@ export default function Register() {
       // Show success message for 1500ms and redirect
       setTimeout(() => {
         setRegistrationSuccess(false);
-        router.push("/loginpage");
+        router.push("/login");
       }, 1500);
     } catch (error) {
       if (error instanceof Error) {
@@ -219,7 +219,7 @@ export default function Register() {
                 </span>
                 <span
                   className="font-medium text-[#4A84ED] hover:text-indigo-500 transition-colors duration-300 cursor-pointer"
-                  onClick={() => router.push("/loginpage")}
+                  onClick={() => router.push("/login")}
                 >
                   Log In
                 </span>

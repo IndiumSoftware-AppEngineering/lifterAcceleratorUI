@@ -1,30 +1,29 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-export const useLogin = () => {
+export const useForgotPassword = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const login = async (email: string, password: string) => {
+  const forgotPassword = async (email: string, newPassword: string, confirmPassword: string) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3002/login', {
-        method: 'POST',
+      const response = await fetch('http://localhost:3002/api/forgot-password', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, newPassword, confirmPassword }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to login');
+        throw new Error(data.message || 'Failed to update password');
       }
 
-      // Return a success message
-      return { message: 'Login successful' };
+      return data;
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -36,5 +35,5 @@ export const useLogin = () => {
     }
   };
 
-  return { login, error, loading };
+  return { forgotPassword, error, loading };
 };

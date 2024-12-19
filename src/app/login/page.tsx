@@ -4,8 +4,8 @@ import { useState, ChangeEvent, FormEvent, FocusEvent } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { EMAIL_REGEX } from "@/app/dashboard/_constants/constants";
-import { useLogin } from "@/components/apiintegrations/useLogin";
-import { useForgotPassword } from "@/components/apiintegrations/useForgotPassword";
+import { useLogin } from "./_api/useLogin";
+import {useForgotPassword} from "./_api/useForgotPassword"
 import SignInButton from "./signInButton";
 import InputField from "./inputFields";
 
@@ -101,7 +101,7 @@ export default function LoginForm() {
         setSuccessMessage("Password Updated")
         setTimeout(() => {
           setSuccessMessage(null);
-          router.push("/loginpage");
+          router.push("/login");
         }, 1500);
       }
     } else {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { ForgotPasswordPayload } from '../dashboard/_constants/type';
+import { ForgotPasswordPayload } from '../../dashboard/_constants/type';
 
 
 
