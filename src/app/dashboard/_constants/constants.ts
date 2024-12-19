@@ -10,7 +10,8 @@ export const ARTIFACT_OPTIONS = [
 ];
 
 export const URL_PATTERN = /^(https?:\/\/[^\s$.?#].[^\s]*)$/;
-
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const PASSWORD_MIN_LENGTH = 6;
 export const DROPDOWN_OPTIONS: DropdownOption[] = [
   {
     id: "git_https",
