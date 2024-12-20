@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { domainData } from "../../_constants/dummy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { DataGrid } from "@/components/common/dataGrid";
+import { DataGrid } from "@/components/common/datagrid/dataGrid";
 import { URL_PATTERN } from "../../_constants/constants";
 import { DomainData } from "../../_constants/type";
 

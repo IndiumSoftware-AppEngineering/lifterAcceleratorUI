@@ -1,15 +1,16 @@
 'use client';
-import AnimatedSideNav from '@/components/common/animatedSideNav';
-import ApplicationsCard from '@/components/common/applicationCountCard';
-import { RightDrawer } from '@/components/common/drawer';
-import FilterComponents from '@/components/common/filterComponents';
-import PieChartComponent from '@/components/common/pieChartComponent';
-import ProjectStatusCard from '@/components/common/projectStatusCard';
-import TopBar from '@/components/common/topBar';
+import AnimatedSideNav from '@/components/common/sideBar/animatedSideNav';
+import ApplicationsCard from '@/components/common/cards/applicationCountCard';
+import { RightDrawer } from '@/components/common/datagrid/drawer';
+import FilterComponents from '@/components/common/datagrid/filterComponents';
+import PieChartComponent from '@/components/common/charts/pieChartComponent';
+import ProjectStatusCard from '@/components/common/cards/projectStatusCard';
+import TopBar from '@/components/common/topBar/topBar';
 import React, { useState } from 'react';
 import { CreateProjectDrawerContent } from './_components/projectCreation/drawerContent';
 import { cardsData } from '@/app/dashboard/_constants/dummy';
 import { ArtifactIngestionDrawerContent } from './_components/gitIngestion/drawerContent';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function Page() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
@@ -95,8 +96,11 @@ export default function Page() {
             handleAddArtifacts={handleAddArtifacts}
           />
         )}
-        {drawerContent === 'addArtifacts' && <ArtifactIngestionDrawerContent />}
+        {drawerContent === 'addArtifacts' && (
+          <ArtifactIngestionDrawerContent onCancel={() => setIsCreateNewProject(false)}/>
+        )}
       </RightDrawer>
+      <Toaster />
     </div>
   );
 }

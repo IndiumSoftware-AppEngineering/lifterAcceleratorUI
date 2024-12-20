@@ -4,9 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 
-import LifterIcon from '../../../public/assets/Lifter Temporary Icon.svg';
-import DashboardIcon from '../../../public/assets/Dashboard Icon.svg';
-import AccessIcon from '../../../public/assets/Access Icon.svg';
+import LifterIcon from '../../../../public/assets/Lifter Temporary Icon.svg';
+import DashboardIcon from '../../../../public/assets/Dashboard Icon.svg';
+import AccessIcon from '../../../../public/assets/Access Icon.svg';
 
 interface NavItem {
   href: string;
@@ -38,7 +38,7 @@ function AnimatedSideNav() {
         isExpanded ? 'w-[200]' : 'w-20'
       }`}
     >
-      <div className='flex flex-col items-center mb-8 relative h-10 flex items-center justify-center'>
+      <div className='flex flex-col items-center mb-8 relative h-10 justify-center'>
         <div className='absolute top-0 left-0 w-full flex flex-col items-center'>
           <Image
             src={LifterIcon}

@@ -13,6 +13,10 @@ export interface CreateProjectDrawerContentProps {
   handleAddArtifacts: () => void;
 }
 
+export interface ArtifactDrawerContentProps {
+  onCancel: () => void;
+}
+
 export interface FormData {
   name: string;
   // id: number | string;
@@ -59,6 +63,7 @@ export interface DropdownOption {
   // id: string;
   label: string;
   fields: string[];
+  apiEndpoint: string;
 }
 export interface ArtifactSelectorProps {
   selectedIcon: string | null;
@@ -69,6 +74,7 @@ export interface ArtifactSelectorProps {
 export interface dropDownMenuProps {
   selectedOption: string | null;
   onOptionSelect: (option: string | null) => void;
+  onCancel: () => void;
 }
 export interface RenderFieldsProps {
   fields: string[];

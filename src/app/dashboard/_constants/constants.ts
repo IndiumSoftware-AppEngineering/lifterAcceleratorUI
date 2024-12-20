@@ -17,25 +17,28 @@ export const DROPDOWN_OPTIONS: DropdownOption[] = [
     id: "git_https",
     label: "Git Public Repo - Https",
     fields: ["Git URL", "Branch"],
+    apiEndpoint: "http://localhost:8000/git/public/https",
   },
   {
     id: "git_https_pat",
     label: "Git with Https and PAT",
-    fields: ["Git URL", "PAT"],
+    fields: ["Git URL", "PAT", "Branch"],
+    apiEndpoint: "http://localhost:8000/git/private/https",
   },
   {
     id: "git_ssh_pat",
     label: "Git with SSH and PAT",
-    fields: ["Git URL", "PAT"],
+    fields: ["SSH URL", "PAT"],
+    apiEndpoint: "http://localhost:8000/git/private/ssh",
   },
-  {
-    id: "git_ssh_key",
-    label: "Git with SSH and Public Key",
-    fields: ["Git URL", "Branch", "SSH", "Public Key"],
-  },
-  {
-    id: "git_zip",
-    label: "Git Repo as Zip",
-    fields: ["Upload Zip"],
-  },
+  // {
+  //   id: "git_ssh_key",
+  //   label: "Git with SSH and Public Key",
+  //   fields: ["SSH URL", "Branch", "Public Key"],
+  // },
+  // {
+  //   id: "git_zip",
+  //   label: "Git Repo as Zip",
+  //   fields: ["Upload Zip"],
+  // },
 ];

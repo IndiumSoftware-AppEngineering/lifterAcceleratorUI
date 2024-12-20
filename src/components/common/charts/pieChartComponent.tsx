@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Cell, Pie, PieChart } from 'recharts';
-import '../../components/styles/chart.css';
+import '../../../components/styles/chart.css';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
