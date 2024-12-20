@@ -1,3 +1,4 @@
+"use client"
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef, useEffect } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -6,17 +7,22 @@ import { DROPDOWN_OPTIONS } from "../../_constants/constants";
 import { RenderFields } from "./renderFields";
 import { Button } from "@/components/ui/button";
 import { dropDownMenuProps } from "../../_constants/type";
-import { validateField,validateForm } from "./validationUtils";
-
+import { validateField, validateForm } from "./validationUtils";
+import { constructPayload } from "./utils/payloadConstruct";
+import { Loader } from "@/components/common/loaders/loader";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 export function DropdownMenuOptions({
   selectedOption,
   onOptionSelect,
+  onCancel,
 }: dropDownMenuProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const { toast } = useToast()
   const getSelectedOptionLabel = () =>
     DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.label ||
     "Choose an Option";
@@ -31,17 +37,64 @@ export function DropdownMenuOptions({
     setFormErrors((prevErrors) => validateField(field, value, prevErrors));
   };
 
-  const handleSubmit = () => {
-    const selectedFields =
-      DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.fields ||
-      [];
-
-    const newErrors = validateForm(selectedFields, formData);
-
+  const handleSubmit = async () => {
+    const selectedOptionData = DROPDOWN_OPTIONS.find(
+      (option) => option.id === selectedOption
+    );
+  
+    if (!selectedOptionData) {
+      toast({
+        variant: "destructive",
+        title: "Invalid Option",
+        description: "Please select a valid option.",
+      });
+      return;
+    }
+  
+    const { fields, apiEndpoint } = selectedOptionData;
+  
+    const newErrors = validateForm(fields, formData);
     setFormErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted successfully", formData);
+      setLoading(true);
+      try {
+
+        const payload = constructPayload(selectedOption || "", formData);
+        const response = await fetch(apiEndpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json(); // Ensure the response body is parsed correctly
+          throw new Error(errorData.message || `API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("API response:", data);
+        setLoading(false);
+        onCancel();
+        toast({
+          title: "download successful",
+          description: "File downloaded from git successfully",
+          action: <ToastAction altText="Try again">Okay</ToastAction>,
+        })
+      } catch (error: any) {
+        setLoading(false);
+        console.error("Error during API call:", error);
+        const errorMessage = error.message || "An unexpected error occurred.";
+        onCancel();
+        toast({
+          variant: "destructive",
+          title: "download failed",
+          description: errorMessage,
+          action: <ToastAction altText="Try again">Try Again</ToastAction>,
+        })
+      }
     }
   };
 
@@ -88,6 +141,7 @@ export function DropdownMenuOptions({
 
   return (
     <div className="mt-2">
+      <p className="text-sm font-semibold mb-2 text-[#363636]">Choose an option</p>
       <div className="flex flex-col gap-2" ref={dropdownRef}>
         <div
           className="relative"
@@ -101,24 +155,22 @@ export function DropdownMenuOptions({
           />
           <ArrowDropDownIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
           {dropdownVisible && (
-            <div className="absolute z-10 w-full mt-1 bg-white border rounded shadow-sm">
+            <div className="absolute z-10 w-full mt-1 bg-white border rounded shadow-xl">
               <ul className="space-y-2 py-2">
                 {DROPDOWN_OPTIONS.map((option) => (
                   <li
                     key={option.id}
                     onClick={() => onOptionSelect(option.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded cursor-pointer transition-all text-sm ${
-                      selectedOption === option.id
+                    className={`flex items-center gap-2 px-4 py-2 rounded cursor-pointer transition-all text-sm ${selectedOption === option.id
                         ? "bg-indigo-50 text-indigo-700 font-medium"
                         : "hover:bg-gray-100"
-                    }`}
+                      }`}
                   >
                     <CheckCircleOutlineIcon
-                      className={`w-4 h-4 ${
-                        selectedOption === option.id
+                      className={`w-4 h-4 ${selectedOption === option.id
                           ? "text-[#172B9E]"
                           : "text-gray-300"
-                      }`}
+                        }`}
                     />
                     <span>{option.label}</span>
                   </li>
@@ -139,19 +191,25 @@ export function DropdownMenuOptions({
               onChange={handleFieldChange}
               onBlur={handleFieldBlur}
             />
-            <div className="flex justify-center mt-4">
-              <Button
-                variant="default"
-                className="mt-2 font-bold"
-                backgroundColor="#172B9E"
-                color="#FFFFFF"
-                width="114px"
-                onClick={handleSubmit}
-                disabled={!isFormValid()}
-              >
-                Get Repo
-              </Button>
-            </div>
+            {!loading ? (
+              <div className="flex justify-center mt-4">
+                <Button
+                  variant="default"
+                  className="mt-2 font-bold"
+                  backgroundColor="#172B9E"
+                  color="#FFFFFF"
+                  width="114px"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid()}
+                >
+                  Get Repo
+                </Button>
+              </div>
+            ) : (
+              <div className="mt-10">
+                <Loader />
+              </div>
+            )}
           </>
         )}
       </div>

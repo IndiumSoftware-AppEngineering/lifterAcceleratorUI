@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import ProfileIcon from '../../../public/assets/avatar.png';
-import DropdownIcon from '../../../public/assets/Dropdown.svg';
+import ProfileIcon from '../../../../public/assets/avatar.png';
+import DropdownIcon from '../../../../public/assets/Dropdown.svg';
 
 export default function TopBar() {
   const notification = true; // Set to true to test the red dot
