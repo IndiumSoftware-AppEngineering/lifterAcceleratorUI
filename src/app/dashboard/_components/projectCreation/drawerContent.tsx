@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import closeDrawerIcon from '../../../../../public/assets/Slide back.svg';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { validateForm } from './validation';
@@ -10,40 +8,88 @@ import { StatusDropdown } from './statusdropdown';
 import { FormField } from './formField';
 import { SuccessModal } from './artifactModal';
 import SuccessIcon from '../../../../../public/assets/Group 18081.svg';
-import { CreateProjectDrawerContentProps, FormData } from '../../_constants/type';
+import {
+  CreateProjectDrawerContentProps,
+  FormData,
+} from '../../_constants/type';
+import { createProject } from './_api/projectCreationApi';
 
 export function CreateProjectDrawerContent({
-  onSubmit,
   onCancel,
   handleAddArtifacts,
 }: CreateProjectDrawerContentProps) {
   const [formData, setFormData] = React.useState<FormData>({
     name: '',
-    id: '',
     description: '',
     status: 'Active',
   });
 
   const [formErrors, setFormErrors] = React.useState<Partial<FormData>>({});
   const [showSuccessModal, setShowSuccessModal] = React.useState(false);
+  const [projectId, setProjectId] = React.useState<number | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    // Fetch the project count when the component mounts
+    const fetchProjectCount = async () => {
+      try {
+        const response = await fetch('/api/projectCount');
+        if (!response.ok) {
+          throw new Error('Failed to fetch project count');
+        }
+        const data = await response.json();
+        if (data.success) {
+          setProjectId(data.nextProjectId); // Set the next project ID
+        } else {
+          setError(data.error || 'Failed to fetch project count');
+        }
+      } catch {
+        setError('An error occurred while fetching the project count.');
+      }
+    };
+
+    fetchProjectCount();
+  }, []);
 
   const resetState = () => {
     setFormData({
       name: '',
-      id: '',
       description: '',
-      status: 'Active',
+      status: 'Active', // Reset status to default
     });
     setFormErrors({});
     setShowSuccessModal(false);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent default form submission behavior
 
+    // Validate the form
     if (validateForm(formData, setFormErrors)) {
-      onSubmit(formData);
-      setShowSuccessModal(true);
+      try {
+        // Call the createProject function
+        const result = await createProject({
+          ...formData,
+        });
+
+        if (result.success) {
+          // Show success modal
+          setShowSuccessModal(true);
+
+          // Refetch the updated project count after successful project creation
+          const response = await fetch('/api/projectCount');
+          const data = await response.json();
+          if (data.success) {
+            setProjectId(data.nextProjectId); // Update the projectId
+          } else {
+            setError(data.error || 'Failed to fetch updated project count');
+          }
+        } else {
+          setError(result.error || 'Failed to create project');
+        }
+      } catch {
+        setError('An unexpected error occurred while creating the project.');
+      }
     }
   };
 
@@ -82,8 +128,6 @@ export function CreateProjectDrawerContent({
       {/* Content */}
       <div className='flex-1 overflow-y-auto p-4'>
         <div className='space-y-2'>
-          {/* Status Bar */}
-
           {/* Form */}
           <form onSubmit={handleSubmit} className='space-y-4'>
             <FormField
@@ -97,9 +141,8 @@ export function CreateProjectDrawerContent({
             <FormField
               label='Project ID*'
               name='id'
-              value={formData.id}
-              onChange={handleInputChange}
-              error={formErrors.id}
+              value={projectId || 'Loading...'} // Display the fetched project ID
+              onChange={() => {}} // Disable input
               placeholder='Project Id'
             />
             <div className='space-y-2'>
@@ -137,6 +180,13 @@ export function CreateProjectDrawerContent({
           </form>
         </div>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className='p-4 text-red-500'>
+          <p>{error}</p>
+        </div>
+      )}
 
       {/* Success Modal */}
       {showSuccessModal && (

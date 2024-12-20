@@ -13,7 +13,9 @@ import { ArtifactIngestionDrawerContent } from './_components/gitIngestion/drawe
 
 export default function Page() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
-  const [drawerContent, setDrawerContent] = useState<'createProject' | 'addArtifacts' | null>('createProject');
+  const [drawerContent, setDrawerContent] = useState<
+    'createProject' | 'addArtifacts' | null
+  >('createProject');
 
   const handleClickNewProject = () => {
     setIsCreateNewProject(!isCreateNewProject);
@@ -23,10 +25,9 @@ export default function Page() {
     setDrawerContent('addArtifacts');
   };
 
-
   const handleCreateProject = (data: {
     name: string;
-    id: string;
+    // id: string | number;
     description: string;
     status: string;
   }) => {
@@ -94,9 +95,7 @@ export default function Page() {
             handleAddArtifacts={handleAddArtifacts}
           />
         )}
-        {drawerContent === 'addArtifacts' && (
-          <ArtifactIngestionDrawerContent/>
-        )}
+        {drawerContent === 'addArtifacts' && <ArtifactIngestionDrawerContent />}
       </RightDrawer>
     </div>
   );
