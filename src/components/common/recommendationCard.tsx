@@ -15,10 +15,10 @@ export default function MicroservicesCard({
   risk,
 }: MicroservicesCardProps) {
   return (
-    <Card className="w-full max-w-sm overflow-hidden">
+    <Card className="w-full max-w-sm overflow-hidden h-[200px]">
       <CardContent className="pt-6">
         <div className="flex items-center gap-6">
-          <div className="flex-shrink-0">
+          <div className="s">
             <Image
               src={imageSrc}
               alt={`${title} image`}

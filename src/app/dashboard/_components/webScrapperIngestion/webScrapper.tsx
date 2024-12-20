@@ -52,8 +52,28 @@ export default function WebScrapper() {
   const [showForm, setShowForm] = useState(false);
   const [authenticationRequired, setAuthenticationRequired] = useState(false);
   const [selectedCredential, setSelectedCredential] = useState("");
+  const [url, seturl] = useState("");
+  const [isUrlValid, setIsValidUrl] = useState(true);
+
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+
+  const handleSubmit = () => {
+    seturl("");
+    setSelectedCredential("");
+    setAuthenticationRequired(false);
+ 
+  }
+
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newUrl = e.target.value;
+    seturl(newUrl);
+
+    // Regex for validating the URL format
+    const urlRegex =
+      /^(https?:\/\/)?([a-zA-Z0-9-_]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+    setIsValidUrl(urlRegex.test(newUrl));
   };
 
   return (
@@ -78,12 +98,11 @@ export default function WebScrapper() {
             </div>
           </>
         ) : (
-           <div className="flex">
-          <h2 className="text-lg font-semibold text-[#172B9E] ml-auto justify-end">
-            Domain Lists
-          </h2>
+          <div className="flex">
+            <h2 className="text-lg font-semibold text-[#172B9E] ml-auto justify-end">
+              Domain Lists
+            </h2>
           </div>
-         
         )}
       </div>
 
@@ -98,9 +117,15 @@ export default function WebScrapper() {
               <input
                 id="url"
                 type="text"
-                className="w-full p-2 border border-gray-300 rounded"
+                value={url}
+                className={`w-full p-2 border rounded ${
+                  isUrlValid ? "border-gray-300" : "border-red-500"
+                }`}
                 placeholder="Enter domain URL"
+                onChange={handleUrlChange}
+                required
               />
+              {!isUrlValid && <p className="text-red-500 mt-1">Invalid URL</p>}
             </div>
 
             <div className="mb-4 flex items-center">
@@ -133,11 +158,12 @@ export default function WebScrapper() {
                 </select>
               </div>
             )}
-
+    
             <div className="flex justify-center items-center mt-4">
               <button
-                type="submit"
+                type="button"
                 className="bg-[#172B9E] text-white px-4 py-2 rounded font-bold"
+                onClick = {handleSubmit}
               >
                 Submit
               </button>

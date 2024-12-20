@@ -14,7 +14,7 @@ export function RightDrawer({ children, isOpen, toggleDrawer }: drawerProps) {
     <div className='flex'>
       <div
         className={cn(
-          'fixed top-0 right-0 h-full bg-white shadow-lg z-40 transition-transform duration-300 ease-in-out',
+          'fixed top-0 right-0 h-full bg-white shadow-lg z-40 transition-transform duration-300 ease-in-out overflow-y-auto',
           isOpen ? 'translate-x-0' : 'translate-x-full'
         )}
         style={{ width: '40%' }}
