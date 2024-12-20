@@ -142,3 +142,9 @@ export interface TermsCheckboxProps {
   isAgreed: boolean;
   onChange: (checked: boolean) => void;
 }
+
+export type DomainData = {
+  domainURL: string;
+  selectors: string;
+  status: string;
+};

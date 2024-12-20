@@ -4,12 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { domainData } from "../../_constants/dummy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { DataGrid } from "@/components/common/dataGrid";
-
-type DomainData = {
-  domainURL: string;
-  selectors: string;
-  status: string;
-};
+import { URL_PATTERN } from "../../_constants/constants";
+import { DomainData } from "../../_constants/type";
 
 const columns: ColumnDef<DomainData>[] = [
   {
@@ -69,16 +65,11 @@ export default function WebScrapper() {
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newUrl = e.target.value;
     seturl(newUrl);
-
-    // Regex for validating the URL format
-    const urlRegex =
-      /^(https?:\/\/)?([a-zA-Z0-9-_]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
-    setIsValidUrl(urlRegex.test(newUrl));
+    setIsValidUrl(URL_PATTERN.test(newUrl));
   };
 
   return (
     <div className="p-4">
-      {/* Header Section */}
       <div>
         {!showForm ? (
           <>
@@ -105,8 +96,7 @@ export default function WebScrapper() {
           </div>
         )}
       </div>
-
-      {/* Conditional Content */}
+      
       {showForm ? (
         <div className="p-4">
           <form>

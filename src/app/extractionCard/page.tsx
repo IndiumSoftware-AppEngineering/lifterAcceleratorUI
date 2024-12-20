@@ -1,14 +1,14 @@
 "use client";
-import AnimatedSideNav from "@/components/common/animatedSideNav"; // Nav Bar
-import TopBar from "@/components/common/topBar"; // Top Bar
-import ProjectOverviewCard from "@/components/common/projectOverviewCard"; // Project Overview Card
+import AnimatedSideNav from "@/components/common/animatedSideNav"; 
+import TopBar from "@/components/common/topBar"; 
+import ProjectOverviewCard from "@/components/common/projectOverviewCard"; 
 import React, { useState } from "react";
-import ProjectNavigation from "./_components/pageNavigation";
+import ProjectNavigation from "./_components/tabNavigation";
 import MicroservicesCard from "@/components/common/recommendationCard";
 import { RightDrawer } from "@/components/common/drawer";
 import { cardsData } from "./_constants/dummy";
 import { recommendationCardsData } from "./_constants/dummy";
-import { ViewArtifactDrawer } from "./_components/drawerContext";
+import { ViewArtifactDrawer } from "./_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function Page() {
