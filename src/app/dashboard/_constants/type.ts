@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent } from "react";
+import { ChangeEvent, FocusEvent } from 'react';
 
 export interface SuccessModalProps {
   isOpen: boolean;
@@ -15,7 +15,7 @@ export interface CreateProjectDrawerContentProps {
 
 export interface FormData {
   name: string;
-  id: string;
+  // id: number | string;
   description: string;
   status: string;
 }
@@ -23,9 +23,9 @@ export interface FormData {
 export interface FormFieldProps {
   label: string;
   name: string;
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
+  error?: string | number;
   placeholder?: string;
 }
 
@@ -34,7 +34,7 @@ export interface StatusDropdownProps {
   setFormData: (
     formData: React.SetStateAction<{
       name: string;
-      id: string;
+      // id: string | number;
       description: string;
       status: string;
     }>
@@ -42,8 +42,10 @@ export interface StatusDropdownProps {
 }
 
 export interface FormErrors {
+  description?: string;
+  status?: string;
   name?: string;
-  id?: string;
+  // id?: string | number;
 }
 
 export interface ArtifactOption {
@@ -54,7 +56,7 @@ export interface ArtifactOption {
 }
 
 export interface DropdownOption {
-  id: string;
+  // id: string;
   label: string;
   fields: string[];
 }

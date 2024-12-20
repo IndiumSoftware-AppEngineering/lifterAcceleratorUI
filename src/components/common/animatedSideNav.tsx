@@ -35,7 +35,7 @@ function AnimatedSideNav() {
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
       className={`flex min-h-screen sm:min-h-3/6  flex-col bg-[#021f46] p-4 transition-all duration-700 ${
-        isExpanded ? 'w-nav_width' : 'w-20'
+        isExpanded ? 'w-[200]' : 'w-20'
       }`}
     >
       <div className='flex flex-col items-center mb-8 relative h-10 flex items-center justify-center'>

@@ -1,4 +1,4 @@
-import { FormData, FormErrors } from "../../_constants/type";
+import { FormData, FormErrors } from '../../_constants/type';
 
 export const validateForm = (
   formData: FormData,
@@ -16,15 +16,21 @@ export const validateForm = (
       'Project name must contain only letters, numbers, and spaces.';
   }
 
-  // Validate Project ID
-  if (!formData.id.trim()) {
-    errors.id = 'Project ID is required.';
-  } else if (!formData.id.startsWith('#')) {
-    errors.id = 'Project ID must start with "#".';
-  } else if (formData.id.length < 3) {
-    errors.id = 'Project ID must be at least 3 characters long.';
+  // Validate Status
+  if (!formData.status) {
+    errors.status = 'Status is required.';
+  } else if (!['Active', 'Inactive'].includes(formData.status)) {
+    errors.status = 'Invalid status. Must be "Active" or "Inactive".';
   }
 
+  // Validate Description (optional)
+  if (formData.description && formData.description.length > 500) {
+    errors.description = 'Description cannot exceed 500 characters.';
+  }
+
+  // Set errors
   setFormErrors(errors);
+
+  // Return true if there are no errors
   return Object.keys(errors).length === 0;
 };
