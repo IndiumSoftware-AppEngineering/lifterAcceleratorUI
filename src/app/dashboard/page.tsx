@@ -12,8 +12,6 @@ import { CreateProjectDrawerContent } from './_components/projectCreation/drawer
 import { cardsData } from '@/app/dashboard/_constants/dummy';
 import { ArtifactIngestionDrawerContent } from './_components/gitIngestion/drawerContent';
 import { Toaster } from '@/components/ui/toaster';
-import { DataGrid } from '@/components/common/datagrid/dataGrid';
-import { modernisationColumns, modernisationData } from './_components/statusGrid/modernaisationProgress';
 
 export default function Page() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
@@ -92,7 +90,7 @@ export default function Page() {
         isOpen={isCreateNewProject}
         toggleDrawer={handleClickNewProject}
       >
-        {/* {drawerContent === 'createProject' && (
+        {drawerContent === 'createProject' && (
           <CreateProjectDrawerContent
             onSubmit={handleCreateProject}
             onCancel={() => setIsCreateNewProject(false)}
@@ -101,13 +99,8 @@ export default function Page() {
         )}
         {drawerContent === 'addArtifacts' && (
           <ArtifactIngestionDrawerContent onCancel={() => setIsCreateNewProject(false)}/>
-<<<<<<< Updated upstream
         )}
-        
-=======
-        )} */}
-        <DataGrid columns={modernisationColumns} data={modernisationData} title="Modernisation Progress"  />
->>>>>>> Stashed changes
+        {/* <DataGrid columns={modernisationColumns} data={modernisationData} title="Modernisation Progress"  /> */}        
       </RightDrawer>
       <Toaster />
     </div>
