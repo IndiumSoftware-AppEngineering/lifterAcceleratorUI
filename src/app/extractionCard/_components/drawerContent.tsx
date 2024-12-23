@@ -1,5 +1,5 @@
 import { artifacts } from "../_constants/dummy";
-import { ArtifactCard } from "@/components/common/artifactCard";
+import { ArtifactCard } from "@/components/common/cards/artifactCard";
 import { projectNameProp } from "../_constants/type";
 
 export function ViewArtifactDrawer({ projectName }: projectNameProp) {
@@ -8,7 +8,7 @@ export function ViewArtifactDrawer({ projectName }: projectNameProp) {
       <div className="text-[#000000] font-bold text-lg shadow-sm">
         <h1>{projectName}</h1>
       </div>
-      <p className="text-md font-bold text-[#363636] p-4">Artefacts</p>
+      <p className="text-md font-bold text-[#363636] p-4">Artifacts</p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {artifacts.map((artifact, index) => (
           <ArtifactCard

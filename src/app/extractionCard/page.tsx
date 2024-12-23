@@ -1,15 +1,16 @@
 "use client";
-import AnimatedSideNav from "@/components/common/animatedSideNav"; 
-import TopBar from "@/components/common/topBar"; 
-import ProjectOverviewCard from "@/components/common/projectOverviewCard"; 
+import AnimatedSideNav from "@/components/common/sideBar/animatedSideNav"; 
+import TopBar from "@/components/common/topBar/topBar";
+import ProjectOverviewCard from "@/components/common/cards/projectOverviewCard";
 import React, { useState } from "react";
 import ProjectNavigation from "./_components/tabNavigation";
-import MicroservicesCard from "@/components/common/recommendationCard";
-import { RightDrawer } from "@/components/common/drawer";
+import MicroservicesCard from "@/components/common/cards/recommendationCard";
+import { RightDrawer } from "@/components/common/datagrid/drawer";
 import { cardsData } from "./_constants/dummy";
 import { recommendationCardsData } from "./_constants/dummy";
-import { ViewArtifactDrawer } from "./_components/drawerContent";
+// import { ViewArtifactDrawer } from "./_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ComplianceStatus from "../dashboard/_components/statusCardGrid/compilanceStatusGrid";
 
 export default function Page() {
   const [isAddArtefacts, setAddArtefacts] = useState<boolean>(false);
@@ -94,7 +95,8 @@ export default function Page() {
             isOpen={isAddArtefacts}
             toggleDrawer={handleClickAddArtefacts}
           >
-            <ViewArtifactDrawer projectName="Natural Language processing Engine" />
+            {/* <ViewArtifactDrawer projectName="Natural Language processing Engine" /> */}
+            <ComplianceStatus/>
           </RightDrawer>
         </main>
       </div>

@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { domainData } from "../../_constants/dummy";
+import { domainData } from "/_constants/dummy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { DataGrid } from "@/components/common/datagrid/dataGrid";
-import { URL_PATTERN } from "../../_constants/constants";
-import { DomainData } from "../../_constants/type";
+import { URL_PATTERN } from "/_constants/constants";
+import { DomainData } from "/_constants/type";
 
 const columns: ColumnDef<DomainData>[] = [
   {
@@ -29,7 +29,7 @@ const columns: ColumnDef<DomainData>[] = [
       const value = getValue<string>();
 
       const statusColor =
-        value === "Active" ? "text-[#40B139]" : "text-[#DC3545]";
+        value === "Active" ? "text-[#22D94B]" : "text-[#DC3545]";
       return <div className={`font-bold ${statusColor}`}>{value}</div>;
     },
   },
