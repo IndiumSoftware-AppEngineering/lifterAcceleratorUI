@@ -25,7 +25,6 @@ interface DataTableProps<TData, TValue> {
 export function DataGrid<TData, TValue>({
   columns,
   data,
-  title, // Destructure title prop
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -34,14 +33,9 @@ export function DataGrid<TData, TValue>({
   });
 
   return (
-    <div className='rounded-md border'>
-      {title && (
-        <div className="p-4 bg-[#F7F8F9] border-b">
-          <h2 className="text-lg font-semibold text-[#000000]">{title}</h2>
-        </div>
-      )}
+    <div className=''>
       <Table>
-        <TableHeader className="bg-[#F7F8F9]">
+        <TableHeader className='bg-[#F7F8F9]'>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
