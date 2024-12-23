@@ -156,3 +156,10 @@ export type DomainData = {
   selectors: string;
   status: string;
 };
+
+export type ComplianceData = {
+  projectName: string;
+  lastUpdated: string;
+  owner: string;
+  status: string
+};

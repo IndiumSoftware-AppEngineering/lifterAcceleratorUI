@@ -142,3 +142,49 @@ export const domainData = [
   { domainURL: "Www.Weburl.Com", selectors: "S1024", status: "Active" },
   { domainURL: "Www.Weburl.Com", selectors: "S1024", status: "Inactive" },
 ];
+
+export const complianceData = [
+  {
+    projectName: "Natural Language Processing Engine",
+    lastUpdated: "01-04-2024",
+    owner: "John Doe",
+    status: "Compliant",
+  },
+  {
+    projectName: "Image Recognition Solution",
+    lastUpdated: "01-04-2024",
+    owner: "Emily Johnson",
+    status: "Compliant",
+  },
+  {
+    projectName: "Collaborative Conversations",
+    lastUpdated: "01-04-2024",
+    owner: "Mark Spencer",
+    status: "Compliant",
+  },
+  {
+    projectName: "Neighborhood Network",
+    lastUpdated: "01-04-2024",
+    owner: "Michael Brown",
+    status: "Compliant",
+  },
+  {
+    projectName: "Commute Companion",
+    lastUpdated: "01-04-2024",
+    owner: "Jane Smith",
+    status: "Non-compliant",
+  },
+  {
+    projectName: "Customer Segmentation Platform",
+    lastUpdated: "01-04-2024",
+    owner: "Charles",
+    status: "Compliant",
+  },
+  {
+    projectName: "Predictive Maintenance System",
+    lastUpdated: "01-04-2024",
+    owner: "Amanda Smith",
+    status: "Non-compliant",
+  },
+];
+

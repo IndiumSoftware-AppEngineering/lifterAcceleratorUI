@@ -99,6 +99,7 @@ export default function Page() {
         {drawerContent === 'addArtifacts' && (
           <ArtifactIngestionDrawerContent onCancel={() => setIsCreateNewProject(false)}/>
         )}
+        
       </RightDrawer>
       <Toaster />
     </div>
