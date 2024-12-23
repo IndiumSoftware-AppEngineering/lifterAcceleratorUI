@@ -1,5 +1,4 @@
 "use client"
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef, useEffect } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -83,18 +82,22 @@ export function DropdownMenuOptions({
           description: "File downloaded from git successfully",
           action: <ToastAction altText="Try again">Okay</ToastAction>,
         })
-      } catch (error: any) {
-        setLoading(false);
-        console.error("Error during API call:", error);
-        const errorMessage = error.message || "An unexpected error occurred.";
+      } catch (error: unknown) {
+        let errorMessage = "An unknown error occurred";
+        if (error instanceof Error) {
+            errorMessage = error.message;
+            console.error(error.message);
+        } else {
+            console.error(errorMessage);
+        }
         onCancel();
         toast({
-          variant: "destructive",
-          title: "download failed",
-          description: errorMessage,
-          action: <ToastAction altText="Try again">Try Again</ToastAction>,
-        })
-      }
+            variant: "destructive",
+            title: "download failed",
+            description: errorMessage,
+            action: <ToastAction altText="Try again">Try Again</ToastAction>,
+        });
+    }
     }
   };
 
