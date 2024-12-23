@@ -4,9 +4,9 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { DropdownOption } from './type';
 
 export const ARTIFACT_OPTIONS = [
-  { id: "github", Icon: GitHubIcon, label: "GitHub" },
-  { id: "globe", Icon: LanguageIcon, label: "Globe" },
-  { id: "ellipsis", Icon: MoreHorizIcon, label: "More Options" },
+  { id: 'github', Icon: GitHubIcon, label: 'GitHub' },
+  { id: 'globe', Icon: LanguageIcon, label: 'Globe' },
+  { id: 'ellipsis', Icon: MoreHorizIcon, label: 'More Options' },
 ];
 
 export const URL_PATTERN = /^(https?:\/\/[^\s$.?#].[^\s]*)$/;
@@ -14,22 +14,22 @@ export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const PASSWORD_MIN_LENGTH = 6;
 export const DROPDOWN_OPTIONS: DropdownOption[] = [
   {
-    id: "git_https",
-    label: "Git Public Repo - Https",
-    fields: ["Git URL", "Branch"],
-    apiEndpoint: "http://localhost:8000/git/public/https",
+    id: 'git_https',
+    label: 'Git Public Repo - Https',
+    fields: ['Git URL', 'Branch'],
+    apiEndpoint: 'http://localhost:8000/git/public/https',
   },
   {
-    id: "git_https_pat",
-    label: "Git with Https and PAT",
-    fields: ["Git URL", "PAT", "Branch"],
-    apiEndpoint: "http://localhost:8000/git/private/https",
+    id: 'git_https_pat',
+    label: 'Git with Https and PAT',
+    fields: ['Git URL', 'PAT', 'Branch'],
+    apiEndpoint: 'http://localhost:8000/git/private/https',
   },
   {
-    id: "git_ssh_pat",
-    label: "Git with SSH and PAT",
-    fields: ["SSH URL", "PAT"],
-    apiEndpoint: "http://localhost:8000/git/private/ssh",
+    id: 'git_ssh_pat',
+    label: 'Git with SSH and PAT',
+    fields: ['SSH URL', 'PAT'],
+    apiEndpoint: 'http://localhost:8000/git/private/ssh',
   },
   // {
   //   id: "git_ssh_key",

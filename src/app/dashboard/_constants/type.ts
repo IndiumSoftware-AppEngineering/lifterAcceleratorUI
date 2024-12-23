@@ -60,7 +60,7 @@ export interface ArtifactOption {
 }
 
 export interface DropdownOption {
-id: string;
+  // id: string;
   label: string;
   fields: string[];
   apiEndpoint: string;
@@ -157,9 +157,17 @@ export type DomainData = {
   status: string;
 };
 
+export interface UptoDateApplicationData {
+  id: string;
+  projectName: string;
+  version: string;
+  lastUpdated: string;
+  owner: string;
+}
+
 export type ComplianceData = {
   projectName: string;
   lastUpdated: string;
   owner: string;
-  status: string
+  status: string;
 };

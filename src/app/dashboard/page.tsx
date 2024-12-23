@@ -12,6 +12,8 @@ import { CreateProjectDrawerContent } from './_components/projectCreation/drawer
 import { cardsData } from '@/app/dashboard/_constants/dummy';
 import { ArtifactIngestionDrawerContent } from './_components/gitIngestion/drawerContent';
 import { Toaster } from '@/components/ui/toaster';
+// import UptoDateApplication from './_components/projectStatusGrid/UptoDateApplicationGrid';
+// import NeedUpdateApplications from './_components/projectStatusGrid/NeedUpdateAppList';
 
 export default function Page() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
@@ -98,9 +100,11 @@ export default function Page() {
           />
         )}
         {drawerContent === 'addArtifacts' && (
-          <ArtifactIngestionDrawerContent onCancel={() => setIsCreateNewProject(false)}/>
+          <ArtifactIngestionDrawerContent
+            onCancel={() => setIsCreateNewProject(false)}
+          />
         )}
-        {/* <DataGrid columns={modernisationColumns} data={modernisationData} title="Modernisation Progress"  /> */}        
+        {/* <DataGrid columns={modernisationColumns} data={modernisationData} title="Modernisation Progress"  /> */}
       </RightDrawer>
       <Toaster />
     </div>
