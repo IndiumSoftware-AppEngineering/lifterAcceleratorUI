@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import AnimatedSideNav from '@/components/common/sideBar/animatedSideNav';
 import ApplicationsCard from '@/components/common/cards/applicationCountCard';
@@ -99,7 +100,7 @@ export default function Page() {
         {drawerContent === 'addArtifacts' && (
           <ArtifactIngestionDrawerContent onCancel={() => setIsCreateNewProject(false)}/>
         )}
-        
+        {/* <DataGrid columns={modernisationColumns} data={modernisationData} title="Modernisation Progress"  /> */}        
       </RightDrawer>
       <Toaster />
     </div>

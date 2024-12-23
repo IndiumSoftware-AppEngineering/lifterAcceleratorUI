@@ -105,7 +105,7 @@ const ProjectStatusCard: React.FC<CardProps> = ({
                     <TooltipTrigger>
                       <Progress
                         value={progress}
-                        backgroundColor="bg-[#40B139]"
+                        color="#40B139"
                         className='w-[100px] h-2.5 mr-2'
                       />
                     </TooltipTrigger>

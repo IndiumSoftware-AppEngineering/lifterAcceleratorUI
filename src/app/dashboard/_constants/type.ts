@@ -60,7 +60,7 @@ export interface ArtifactOption {
 }
 
 export interface DropdownOption {
-  // id: string;
+id: string;
   label: string;
   fields: string[];
   apiEndpoint: string;
