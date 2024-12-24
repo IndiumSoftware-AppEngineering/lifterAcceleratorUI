@@ -10,7 +10,7 @@ import { cardsData } from "./_constants/dummy";
 import { recommendationCardsData } from "./_constants/dummy";
 // import { ViewArtifactDrawer } from "./_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ComplianceStatus from "../dashboard/_components/statusCardGrid/compilanceStatusGrid";
+import ComplianceStatus from "../dashboard/_components/statusGrid/compilanceStatusGrid";
 
 export default function Page() {
   const [isAddArtefacts, setAddArtefacts] = useState<boolean>(false);
