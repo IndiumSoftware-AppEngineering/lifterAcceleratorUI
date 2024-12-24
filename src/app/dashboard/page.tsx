@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import AnimatedSideNav from '@/components/common/sideBar/animatedSideNav';
 import ApplicationsCard from '@/components/common/cards/applicationCountCard';
