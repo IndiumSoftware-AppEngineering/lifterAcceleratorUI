@@ -79,8 +79,9 @@ export function DropdownMenuOptions({
         onCancel();
         toast({
           title: "download successful",
-          description: "File downloaded from git successfully",
-          action: <ToastAction altText="Try again">Okay</ToastAction>,
+          variant: "default",
+          description: "File downloaded on '/Users/I7017/Documents/git-clone/' from git successfully",
+          action: <ToastAction altText="Okay">Okay</ToastAction>,
         })
       } catch (error: unknown) {
         let errorMessage = "An unknown error occurred";

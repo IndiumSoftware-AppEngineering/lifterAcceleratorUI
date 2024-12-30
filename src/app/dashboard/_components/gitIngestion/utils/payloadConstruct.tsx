@@ -17,7 +17,8 @@ export const constructPayload = (selectedOption: string, formData: Record<string
           url: formData["Git URL"],
           personalAccessToken: formData["PAT"],
           branch: formData["Branch"],
-          userName: "nirai"
+          userName: "nirai",
+          ...commonFields,
         };
   
       case "git_ssh_pat":

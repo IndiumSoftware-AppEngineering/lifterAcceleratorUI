@@ -29,8 +29,8 @@ export function CreateProjectDrawerContent({
   const [projectId, setProjectId] = React.useState<number | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
+  // Fetch the project ID when the drawer is opened
   React.useEffect(() => {
-    // Fetch the project count when the component mounts
     const fetchProjectCount = async () => {
       try {
         const response = await fetch('/api/projectCount');
@@ -75,15 +75,6 @@ export function CreateProjectDrawerContent({
         if (result.success) {
           // Show success modal
           setShowSuccessModal(true);
-
-          // Refetch the updated project count after successful project creation
-          const response = await fetch('/api/projectCount');
-          const data = await response.json();
-          if (data.success) {
-            setProjectId(data.nextProjectId); // Update the projectId
-          } else {
-            setError(data.error || 'Failed to fetch updated project count');
-          }
         } else {
           setError(result.error || 'Failed to create project');
         }
@@ -103,6 +94,26 @@ export function CreateProjectDrawerContent({
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Fetch the next project ID when the drawer is closed
+  const handleCancel = async () => {
+    try {
+      const response = await fetch('/api/projectCount');
+      if (!response.ok) {
+        throw new Error('Failed to fetch project count');
+      }
+      const data = await response.json();
+      if (data.success) {
+        setProjectId(data.nextProjectId); // Update the project ID
+      } else {
+        setError(data.error || 'Failed to fetch updated project count');
+      }
+    } catch {
+      setError('An error occurred while fetching the project count.');
+    } finally {
+      onCancel(); // Close the drawer
+    }
   };
 
   return (
@@ -165,7 +176,7 @@ export function CreateProjectDrawerContent({
               <Button
                 type='button'
                 variant='outline'
-                onClick={onCancel}
+                onClick={handleCancel} // Use handleCancel instead of onCancel
                 className='h-10 px-6 text-[#172B9E] rounded-sm'
               >
                 Cancel

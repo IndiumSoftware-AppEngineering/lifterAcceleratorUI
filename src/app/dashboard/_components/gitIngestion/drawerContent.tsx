@@ -25,10 +25,10 @@ export function ArtifactIngestionDrawerContent({
   };
   return (
     <div className="flex flex-col h-screen bg-white">
-      <div className='border-b p-4'>
+      <div className='border-b p-2'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2'>
-            <h2 className='text-lg font-semibold'>Create New Project</h2>
+            <h2 className='text-base font-semibold'>Create New Project</h2>
           </div>
         </div>
       </div>
