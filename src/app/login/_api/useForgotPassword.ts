@@ -9,7 +9,7 @@ export const useForgotPassword = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3002/api/forgot-password', {
+      const response = await fetch('http://localhost:3000/api/forgot-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

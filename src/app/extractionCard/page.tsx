@@ -8,7 +8,7 @@ import MicroservicesCard from "@/components/common/cards/recommendationCard";
 import { RightDrawer } from "@/components/common/datagrid/drawer";
 import { cardsData } from "./_constants/dummy";
 import { recommendationCardsData } from "./_constants/dummy";
-// import { ViewArtifactDrawer } from "./_components/drawerContent";
+import { ViewArtifactDrawer } from "./_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ComplianceStatus from "../dashboard/_components/statusGrid/compilanceStatusGrid";
 
@@ -95,8 +95,8 @@ export default function Page() {
             isOpen={isAddArtefacts}
             toggleDrawer={handleClickAddArtefacts}
           >
-            {/* <ViewArtifactDrawer projectName="Natural Language processing Engine" /> */}
-            <ComplianceStatus/>
+            <ViewArtifactDrawer projectName="Natural Language processing Engine" />
+            {/* <ComplianceStatus/> */}
           </RightDrawer>
         </main>
       </div>
