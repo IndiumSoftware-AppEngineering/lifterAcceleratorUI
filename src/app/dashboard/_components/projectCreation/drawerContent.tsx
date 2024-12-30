@@ -26,30 +26,30 @@ export function CreateProjectDrawerContent({
 
   const [formErrors, setFormErrors] = React.useState<Partial<FormData>>({});
   const [showSuccessModal, setShowSuccessModal] = React.useState(false);
-  const [projectId, setProjectId] = React.useState<number | null>(null);
+  // const [projectId, setProjectId] = React.useState<number | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
-  // Fetch the project ID when the drawer is opened
-  React.useEffect(() => {
-    const fetchProjectCount = async () => {
-      try {
-        const response = await fetch('/api/projectCount');
-        if (!response.ok) {
-          throw new Error('Failed to fetch project count');
-        }
-        const data = await response.json();
-        if (data.success) {
-          setProjectId(data.nextProjectId); // Set the next project ID
-        } else {
-          setError(data.error || 'Failed to fetch project count');
-        }
-      } catch {
-        setError('An error occurred while fetching the project count.');
-      }
-    };
+  // React.useEffect(() => {
+  //   // Fetch the project count when the component mounts
+  //   const fetchProjectCount = async () => {
+  //     try {
+  //       const response = await fetch('/api/projectCount');
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch project count');
+  //       }
+  //       const data = await response.json();
+  //       if (data.success) {
+  //         // setProjectId(data.nextProjectId); // Set the next project ID
+  //       } else {
+  //         setError(data.error || 'Failed to fetch project count');
+  //       }
+  //     } catch {
+  //       setError('An error occurred while fetching the project count.');
+  //     }
+  //   };
 
-    fetchProjectCount();
-  }, []);
+  //   fetchProjectCount();
+  // }, []);
 
   const resetState = () => {
     setFormData({
@@ -75,6 +75,15 @@ export function CreateProjectDrawerContent({
         if (result.success) {
           // Show success modal
           setShowSuccessModal(true);
+
+          // Refetch the updated project count after successful project creation
+          const response = await fetch('/api/projectCount');
+          const data = await response.json();
+          if (data.success) {
+            // setProjectId(data.nextProjectId); // Update the projectId
+          } else {
+            setError(data.error || 'Failed to fetch updated project count');
+          }
         } else {
           setError(result.error || 'Failed to create project');
         }
@@ -149,13 +158,13 @@ export function CreateProjectDrawerContent({
               error={formErrors.name}
               placeholder='Project Title'
             />
-            <FormField
+            {/* <FormField
               label='Project ID*'
               name='id'
               value={projectId || 'Loading...'} // Display the fetched project ID
               onChange={() => {}} // Disable input
               placeholder='Project Id'
-            />
+            /> */}
             <div className='space-y-2'>
               <Label
                 htmlFor='description'
