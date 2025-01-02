@@ -11,7 +11,9 @@ export const validateField = (
       errors[field] = "This field is required.";
     } else if (field === "Git URL" && !isValidUrl(value.trim())) {
       errors[field] = "This is not a valid URL.";
-    } else {
+    } else if (field === "Artifact Name" && !value.trim()) {
+      errors[field] = "This is not a valid Name.";
+    }else {
       delete errors[field];
     }
   

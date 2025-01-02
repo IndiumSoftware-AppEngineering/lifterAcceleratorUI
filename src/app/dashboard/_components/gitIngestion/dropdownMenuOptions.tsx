@@ -37,11 +37,6 @@ export function DropdownMenuOptions({
     setFormErrors((prevErrors) => validateField(field, value, prevErrors));
   };
 
-  const onNameChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, "Artifact Name": value }));
-    setFormErrors((prevErrors) => validateField("Artifact Name", value, prevErrors));
-  }
-
   const handleSubmit = async () => {
     const selectedOptionData = DROPDOWN_OPTIONS.find(
       (option) => option.id === selectedOption
@@ -200,7 +195,7 @@ export function DropdownMenuOptions({
             </div>
           )}
         </div>
-        <input
+        {/* <input
               type="text"
               placeholder="Artifact Name"
               className={`p-2 border rounded text-sm w-full ${
@@ -209,7 +204,7 @@ export function DropdownMenuOptions({
                   : "border-gray-300"
               }`}
               onChange={(e) => onNameChange(e.target.value)}
-        />
+        /> */}
         {selectedOption && (
           <>
             <RenderFields
