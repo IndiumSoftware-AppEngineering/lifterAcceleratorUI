@@ -9,7 +9,6 @@ export const constructPayload = (selectedOption: string, formData: Record<string
         return {
           url: formData["Git URL"],
           branch: formData["Branch"],
-          ...commonFields,
         };
   
       case "git_https_pat":

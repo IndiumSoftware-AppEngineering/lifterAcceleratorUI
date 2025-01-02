@@ -11,6 +11,7 @@ import { constructPayload } from "./utils/payloadConstruct";
 import { Loader } from "@/components/common/loaders/loader";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { config } from "process";
 export function DropdownMenuOptions({
   selectedOption,
   onOptionSelect,
@@ -36,6 +37,11 @@ export function DropdownMenuOptions({
     setFormErrors((prevErrors) => validateField(field, value, prevErrors));
   };
 
+  const onNameChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, "Artifact Name": value }));
+    setFormErrors((prevErrors) => validateField("Artifact Name", value, prevErrors));
+  }
+
   const handleSubmit = async () => {
     const selectedOptionData = DROPDOWN_OPTIONS.find(
       (option) => option.id === selectedOption
@@ -50,7 +56,7 @@ export function DropdownMenuOptions({
       return;
     }
   
-    const { fields, apiEndpoint } = selectedOptionData;
+    const { fields } = selectedOptionData;
   
     const newErrors = validateForm(fields, formData);
     setFormErrors(newErrors);
@@ -59,8 +65,19 @@ export function DropdownMenuOptions({
       setLoading(true);
       try {
 
-        const payload = constructPayload(selectedOption || "", formData);
-        const response = await fetch(apiEndpoint, {
+        const configPayload = constructPayload(selectedOption || "", formData);
+        const payload = {
+          name: formData["Artifact Name"],
+          artifact_type: "Github",
+          artifact_config: configPayload,
+          org_id: 1,
+          project_id: 1,
+          created_by: "admin@example.com",
+          created_on: "2025-01-01T10:00:00Z",
+          modified_by: "user@example.com",
+          modified_on: "2025-01-02T12:00:00Z",
+        }
+        const response = await fetch("/api/configure-artifact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -80,7 +97,7 @@ export function DropdownMenuOptions({
         toast({
           title: "download successful",
           variant: "default",
-          description: "File downloaded on '/Users/I7017/Documents/git-clone/' from git successfully",
+          description: "Git Ingestion configured",
           action: <ToastAction altText="Okay">Okay</ToastAction>,
         })
       } catch (error: unknown) {
@@ -183,6 +200,16 @@ export function DropdownMenuOptions({
             </div>
           )}
         </div>
+        <input
+              type="text"
+              placeholder="Artifact Name"
+              className={`p-2 border rounded text-sm w-full ${
+                formErrors["Artifact Name"]
+                  ? "border-red-500"
+                  : "border-gray-300"
+              }`}
+              onChange={(e) => onNameChange(e.target.value)}
+        />
         {selectedOption && (
           <>
             <RenderFields

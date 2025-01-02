@@ -17,19 +17,16 @@ export const DROPDOWN_OPTIONS: DropdownOption[] = [
     id: 'git_https',
     label: 'Git Public Repo - Https',
     fields: ['Git URL', 'Branch'],
-    apiEndpoint: 'http://localhost:8000/git/public/https',
   },
   {
     id: 'git_https_pat',
     label: 'Git with Https and PAT',
     fields: ['Git URL', 'PAT', 'Branch'],
-    apiEndpoint: 'http://localhost:8000/git/private/https',
   },
   {
     id: 'git_ssh_pat',
     label: 'Git with SSH and PAT',
     fields: ['SSH URL', 'PAT'],
-    apiEndpoint: 'http://localhost:8000/git/private/ssh',
   },
   // {
   //   id: "git_ssh_key",

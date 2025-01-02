@@ -11,6 +11,7 @@ import SlideshowIcon from '@mui/icons-material/Slideshow';
 import ImageIcon from '@mui/icons-material/Image';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import MovieIcon from '@mui/icons-material/Movie';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 import { MoreVertical } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -24,51 +25,23 @@ import { Button } from '@/components/ui/button';
 
 interface PdfFileProps {
   filename: string;
-  size: string;
+  type: string;
   date: string;
   author: string;
 }
 
-function getIconForFile(filename: string) {
-  const extension = filename.split('.').pop()?.toLowerCase();
+function getIconForFile(type: string) {
 
-  switch (extension) {
-    case 'pdf':
-      return <PictureAsPdfIcon className='h-6 w-6 text-red-500' />;
-    case 'txt':
-      return <DescriptionIcon className='h-6 w-6 text-gray-500' />;
-    case 'md':
-      return <CodeIcon className='h-6 w-6 text-blue-500' />;
-    case 'rtf':
-      return <TextSnippetIcon className='h-6 w-6 text-green-500' />;
-    case 'doc':
-    case 'docx':
-      return <ArticleIcon className='h-6 w-6 text-blue-700' />;
-    case 'xls':
-    case 'xlsx':
-      return <TableChartIcon className='h-6 w-6 text-green-600' />;
-    case 'csv':
-    case 'tsv':
-      return <GridOnIcon className='h-6 w-6 text-orange-500' />;
-    case 'ppt':
-    case 'pptx':
-      return <SlideshowIcon className='h-6 w-6 text-orange-700' />;
-    case 'jpeg':
-    case 'jpg':
-    case 'png':
-    case 'tiff':
-      return <ImageIcon className='h-6 w-6 text-purple-500' />;
-    case 'mp3':
-      return <AudiotrackIcon className='h-6 w-6 text-green-500' />;
-    case 'mp4':
-      return <MovieIcon className='h-6 w-6 text-red-500' />;
+  switch (type) {
+    case 'Github':
+      return <GitHubIcon className='h-6 w-6 text-purple-500' />;
     default:
       return <DescriptionIcon className='h-6 w-6 text-gray-400' />; // Default file icon
   }
 }
 
-export function ArtifactCard({ filename, size, date, author }: PdfFileProps) {
-  const fileIcon = getIconForFile(filename);
+export function ArtifactCard({ filename, type, date, author }: PdfFileProps) {
+  const fileIcon = getIconForFile(type);
 
   return (
     <Card className='w-full p-4 flex flex-col gap-6 bg-white shadow-sm h-artifact_card_height w-artifact_card_width'>
@@ -103,10 +76,9 @@ export function ArtifactCard({ filename, size, date, author }: PdfFileProps) {
       <div className='flex-grow min-w-0'>
         <div className='flex items-center justify-between'>
           <h3 className='text-gray-900 font-bold truncate'>{filename}</h3>
-          <span className='text-medium text-[#444A61]'>{size}</span>
         </div>
-        <p className='text-gray-500 text-sm truncate text-[#8D919F]'>
-          {date}, {author}
+        <p className='text-gray-500 text-sm truncate'>
+          {new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}, {author}
         </p>
       </div>
     </Card>
