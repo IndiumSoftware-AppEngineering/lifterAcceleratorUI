@@ -3,10 +3,7 @@
 import { useState, ChangeEvent, FormEvent, FocusEvent } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import {
-  EMAIL_REGEX,
-  PASSWORD_MIN_LENGTH,
-} from "../dashboard/_constants/constants";
+import { EMAIL_REGEX, PASSWORD_MIN_LENGTH } from "../dashboard/_constants/constants";
 import { registerUser } from "@/app/signup/_api/register";
 import SignUpButton from "./signUpButton";
 import InputField from "./inputField";
@@ -15,10 +12,12 @@ import TermsCheckbox from "./termsCheckbox";
 export default function Register() {
   const [formData, setFormData] = useState({
     name: "",
-    surname: "",
-    phoneNumber: "",
+    username: "",
     email: "",
     password: "",
+    org_id: 1,
+    created_by: "admin@example.com",
+    created_on: new Date().toISOString(),
   });
 
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -27,11 +26,8 @@ export default function Register() {
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
   const [isEmailTouched, setIsEmailTouched] = useState<boolean>(false);
   const [isPasswordTouched, setIsPasswordTouched] = useState<boolean>(false);
-  const [registrationError, setRegistrationError] = useState<string | null>(
-    null
-  );
-  const [registrationSuccess, setRegistrationSuccess] =
-    useState<boolean>(false);
+  const [registrationError, setRegistrationError] = useState<string | null>(null);
+  const [registrationSuccess, setRegistrationSuccess] = useState<boolean>(false);
   const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,10 +40,7 @@ export default function Register() {
     if (name === "password") setPasswordError(null);
   };
 
-  const handleBlur = (
-    e: FocusEvent<HTMLInputElement>,
-    type: "email" | "password"
-  ) => {
+  const handleBlur = (e: FocusEvent<HTMLInputElement>, type: "email" | "password") => {
     const value = e.target.value;
 
     if (type === "email") {
@@ -82,11 +75,13 @@ export default function Register() {
 
     try {
       const payload = {
-        username: formData.name,
-        surname: formData.surname,
-        email: formData.email,
+        name: formData.name,
+        username: formData.username,
+        email_id: formData.email,
         password: formData.password,
-        phone: formData.phoneNumber,
+        org_id: formData.org_id,
+        created_by: formData.created_by,
+        created_on: formData.created_on,
       };
 
       const response = await registerUser(payload);
@@ -97,10 +92,12 @@ export default function Register() {
       // Reset form fields
       setFormData({
         name: "",
-        surname: "",
-        phoneNumber: "",
+        username: "",
         email: "",
         password: "",
+        org_id: 1,
+        created_by: "admin@example.com",
+        created_on: new Date().toISOString(),
       });
       setEmailError(null);
       setPasswordError(null);
@@ -155,21 +152,13 @@ export default function Register() {
               onChange={handleChange}
             />
             <InputField
-              label="Surname"
+              label="Username"
               type="text"
-              name="surname"
-              value={formData.surname}
+              name="username"
+              value={formData.username}
               onChange={handleChange}
             />
           </div>
-
-          <InputField
-            label="Phone Number"
-            type="tel"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
 
           <InputField
             label="Email Address"

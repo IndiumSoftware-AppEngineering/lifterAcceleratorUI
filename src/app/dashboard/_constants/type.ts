@@ -1,3 +1,4 @@
+import { Message } from 'ai/react';
 import { ChangeEvent, FocusEvent } from 'react';
 
 export interface SuccessModalProps {
@@ -58,7 +59,6 @@ export interface ArtifactOption {
   label: string;
   dropdownOptions?: string[];
 }
-
 export interface DropdownOption {
   id: string;
   label: string;
@@ -104,11 +104,13 @@ export interface LoginPayload {
   password: string;
 }
 export interface SignupPayload {
+  name: string;
   username: string;
-  surname: string;
-  email: string;
-  password: string;
-  phone: string;
+  email_id: string;
+  org_id: number;
+  created_by: string;
+  created_on: string; 
+  password:string;
 }
 export interface InputFieldProps {
   label: string;
@@ -171,3 +173,8 @@ export type ComplianceData = {
   owner: string;
   status: string;
 };
+export interface ChatHistory {
+  id: string;
+  title: string;
+  messages: Message[];
+}
