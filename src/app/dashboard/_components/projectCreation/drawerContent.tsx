@@ -14,6 +14,7 @@ import {
   FormErrors,
 } from '../../_constants/type';
 import { createProject } from './_api/projectCreationApi';
+import { revalidateDashboard } from '../../revalidateDashboard';
 
 export function CreateProjectDrawerContent({
   onCancel,
@@ -45,11 +46,16 @@ export function CreateProjectDrawerContent({
     if (validateForm(formData, setFormErrors)) {
       console.log('Form data:', formData);
       try {
+        // Step 1: Create the project
         const result = await createProject({
           ...formData,
         });
 
         if (result.success) {
+          // Step 2: Revalidate the dashboard
+          await revalidateDashboard();
+
+          // Step 3: Show the success modal
           setShowSuccessModal(true);
         } else {
           setError(result.error || 'Failed to create project');

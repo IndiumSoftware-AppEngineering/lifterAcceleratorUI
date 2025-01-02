@@ -5,9 +5,9 @@ import { SignupPayload } from '../../dashboard/_constants/type';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json() as SignupPayload;
-    const { username, surname, email, phone, password } = body;
+    const { username, name, email_id, org_id, created_by, created_on,password } = body;
 
-    if (!username || !surname || !email || !phone || !password) {
+    if (!username || !name || !email_id || !org_id || !created_by || !created_on||!password) {
       return NextResponse.json(
         { message: 'All fields are required' },
         { status: 400 }
@@ -16,13 +16,13 @@ export async function POST(req: NextRequest) {
 
     // Check if email exists
     const emailExists = await query({
-      query: 'SELECT * FROM registration WHERE email = $1',
-      values: [email],
+      query: 'SELECT * FROM users WHERE email_id = $1',
+      values: [email_id],
     });
 
     // Check if username exists
     const usernameExists = await query({
-      query: 'SELECT * FROM registration WHERE username = $1',
+      query: 'SELECT * FROM users WHERE username = $1',
       values: [username],
     });
 
@@ -39,14 +39,12 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
-
-    // Insert new user
     await query({
       query: `
-        INSERT INTO registration (username, surname, email, password, phone)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO users (name, username, email_id, org_id, created_by, created_on,password)
+        VALUES ($1, $2, $3, $4, $5, $6)
       `,
-      values: [username, surname, email, password, phone],
+      values: [name, username, email_id, org_id, created_by, created_on,password], // Include created_by and created_on
     });
 
     return NextResponse.json(

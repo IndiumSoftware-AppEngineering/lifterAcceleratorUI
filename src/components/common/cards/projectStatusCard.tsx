@@ -20,7 +20,7 @@ interface Icon {
   iconPath: string;
 }
 
-interface CardProps {
+export interface CardProps {
   id: string;
   title: string;
   status: string;
