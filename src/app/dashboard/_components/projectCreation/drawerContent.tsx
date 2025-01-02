@@ -11,6 +11,7 @@ import SuccessIcon from '../../../../../public/assets/Group 18081.svg';
 import {
   CreateProjectDrawerContentProps,
   FormData,
+  FormErrors,
 } from '../../_constants/type';
 import { createProject } from './_api/projectCreationApi';
 
@@ -21,69 +22,35 @@ export function CreateProjectDrawerContent({
   const [formData, setFormData] = React.useState<FormData>({
     name: '',
     description: '',
-    status: 'Active',
+    status: true,
   });
 
-  const [formErrors, setFormErrors] = React.useState<Partial<FormData>>({});
+  const [formErrors, setFormErrors] = React.useState<FormErrors>({});
   const [showSuccessModal, setShowSuccessModal] = React.useState(false);
-  // const [projectId, setProjectId] = React.useState<number | null>(null);
   const [error, setError] = React.useState<string | null>(null);
-
-  // React.useEffect(() => {
-  //   // Fetch the project count when the component mounts
-  //   const fetchProjectCount = async () => {
-  //     try {
-  //       const response = await fetch('/api/projectCount');
-  //       if (!response.ok) {
-  //         throw new Error('Failed to fetch project count');
-  //       }
-  //       const data = await response.json();
-  //       if (data.success) {
-  //         // setProjectId(data.nextProjectId); // Set the next project ID
-  //       } else {
-  //         setError(data.error || 'Failed to fetch project count');
-  //       }
-  //     } catch {
-  //       setError('An error occurred while fetching the project count.');
-  //     }
-  //   };
-
-  //   fetchProjectCount();
-  // }, []);
 
   const resetState = () => {
     setFormData({
       name: '',
       description: '',
-      status: 'Active', // Reset status to default
+      status: true,
     });
     setFormErrors({});
     setShowSuccessModal(false);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
-    // Validate the form
     if (validateForm(formData, setFormErrors)) {
+      console.log('Form data:', formData);
       try {
-        // Call the createProject function
         const result = await createProject({
           ...formData,
         });
 
         if (result.success) {
-          // Show success modal
           setShowSuccessModal(true);
-
-          // Refetch the updated project count after successful project creation
-          const response = await fetch('/api/projectCount');
-          const data = await response.json();
-          if (data.success) {
-            // setProjectId(data.nextProjectId); // Update the projectId
-          } else {
-            setError(data.error || 'Failed to fetch updated project count');
-          }
         } else {
           setError(result.error || 'Failed to create project');
         }
@@ -105,24 +72,8 @@ export function CreateProjectDrawerContent({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Fetch the next project ID when the drawer is closed
   const handleCancel = async () => {
-    try {
-      const response = await fetch('/api/projectCount');
-      if (!response.ok) {
-        throw new Error('Failed to fetch project count');
-      }
-      const data = await response.json();
-      if (data.success) {
-        setProjectId(data.nextProjectId); // Update the project ID
-      } else {
-        setError(data.error || 'Failed to fetch updated project count');
-      }
-    } catch {
-      setError('An error occurred while fetching the project count.');
-    } finally {
-      onCancel(); // Close the drawer
-    }
+    onCancel();
   };
 
   return (
@@ -136,10 +87,7 @@ export function CreateProjectDrawerContent({
         </div>
       </div>
       <div className='flex items-center justify-between rounded-sm bg-[#F7F7F7] p-2'>
-        <StatusDropdown
-          status={formData.status}
-          setFormData={setFormData} // Pass setFormData directly
-        />
+        <StatusDropdown status={formData.status} setFormData={setFormData} />
         <Button variant='ghost' size='icon' className='h-8 w-8 rounded-sm'>
           <MoreVertical className='h-4 w-4' />
         </Button>
@@ -158,13 +106,6 @@ export function CreateProjectDrawerContent({
               error={formErrors.name}
               placeholder='Project Title'
             />
-            {/* <FormField
-              label='Project ID*'
-              name='id'
-              value={projectId || 'Loading...'} // Display the fetched project ID
-              onChange={() => {}} // Disable input
-              placeholder='Project Id'
-            /> */}
             <div className='space-y-2'>
               <Label
                 htmlFor='description'
@@ -185,7 +126,7 @@ export function CreateProjectDrawerContent({
               <Button
                 type='button'
                 variant='outline'
-                onClick={handleCancel} // Use handleCancel instead of onCancel
+                onClick={handleCancel}
                 className='h-10 px-6 text-[#172B9E] rounded-sm'
               >
                 Cancel
@@ -214,8 +155,8 @@ export function CreateProjectDrawerContent({
           isOpen={showSuccessModal}
           onClose={handleModalClose}
           onConfirm={() => {
-            handleModalClose(); // Close the modal
-            handleAddArtifacts(); // Switch to "Add Artifacts" content
+            handleModalClose();
+            handleAddArtifacts();
           }}
           successIcon={SuccessIcon}
         />

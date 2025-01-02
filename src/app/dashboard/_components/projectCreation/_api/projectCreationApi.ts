@@ -3,13 +3,16 @@ import { FormData } from '@/app/dashboard/_constants/type';
 // Function to create a project
 export async function createProject(formData: FormData) {
   try {
-    // Ensure orgId is included in the request body
+    // Ensure org_id is included in the request body
     const requestBody = {
       name: formData.name,
       description: formData.description,
       active: formData.status,
-      orgId: 1, // Hardcoded orgId
+      org_id: 1, // Hardcoded org_id
+      created_by: 'user_1',
     };
+
+    console.log('Request body:', requestBody);
 
     const response = await fetch('/api/projectCreation', {
       method: 'POST',
