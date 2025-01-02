@@ -21,7 +21,7 @@ export interface FormData {
   name: string;
   // id: number | string;
   description: string;
-  status: string;
+  status: boolean;
 }
 
 export interface FormFieldProps {
@@ -34,13 +34,13 @@ export interface FormFieldProps {
 }
 
 export interface StatusDropdownProps {
-  status: string;
+  status: boolean;
   setFormData: (
     formData: React.SetStateAction<{
       name: string;
       // id: string | number;
       description: string;
-      status: string;
+      status: boolean;
     }>
   ) => void;
 }

@@ -16,11 +16,9 @@ export const validateForm = (
       'Project name must contain only letters, numbers, and spaces.';
   }
 
-  // Validate Status
-  if (!formData.status) {
-    errors.status = 'Status is required.';
-  } else if (!['Active', 'Inactive'].includes(formData.status)) {
-    errors.status = 'Invalid status. Must be "Active" or "Inactive".';
+  // Validate Status (boolean)
+  if (typeof formData.status !== 'boolean') {
+    errors.status = 'Status is required and must be a boolean (true or false).';
   }
 
   // Validate Description (optional)
