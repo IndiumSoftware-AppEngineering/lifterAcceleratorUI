@@ -63,7 +63,6 @@ export interface DropdownOption {
   id: string;
   label: string;
   fields: string[];
-  apiEndpoint: string;
 }
 export interface ArtifactSelectorProps {
   selectedIcon: string | null;
