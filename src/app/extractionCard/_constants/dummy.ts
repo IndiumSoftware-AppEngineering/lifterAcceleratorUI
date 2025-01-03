@@ -18,17 +18,6 @@ export const cardsData = [
     imageUrl: '/assets/security.svg', 
   },
   {
-  title: 'Project Info',
-    keyValuePairs: [
-      { key: 'Project ID', value: ['#110565'] },
-      { key: 'Created On', value: ['13-Mar-2024'] },
-      { key: 'Current Version', value: ['1.0'] },
-      { key: 'Updated On', value: ['13-Mar-2024'] },
-      { key: 'Created By', value: ['John Doe'] },
-    ],
-    imageUrl: '/assets/projectInfo.svg', 
-  },
-  {
     title: 'Integrations',
     keyValuePairs: [
       { key: 'Framework', value: ['Test for Unit Testing, Cypress for end to end testing'] },
@@ -56,34 +45,6 @@ export const cardsData = [
   },
    
 ];
-
-  // Sample Data for Recommendation Cards
-  export const recommendationCardsData = [
-    {
-      imageSrc:"/assets/hex.jpg",
-      title: "Modernisation Approach",
-      benefit: "Improves system efficiency",
-      risk: "Requires significant initial",
-    },
-    {
-      imageSrc:"/assets/hex.jpg",
-      title:"Refactor to Microservices",
-      benefit:"Scalability, Flexibility",
-      risk:"High Initial Cost",
-    },
-    {
-      imageSrc:"/assets/hex.jpg",
-      title:"Refactor to Microservices",
-      benefit:"Scalability, Flexibility",
-      risk:"High Initial Cost",
-    },
-    {
-      imageSrc:"/assets/hex.jpg",
-      title:"Refactor to Microservices",
-      benefit:"Scalability, Flexibility",
-      risk:"High Initial Cost",
-    },
-  ];
 
   export const artifacts = [
     {
@@ -117,3 +78,4 @@ export const cardsData = [
         author: 'Michael Johnson',
       },
   ];
+  

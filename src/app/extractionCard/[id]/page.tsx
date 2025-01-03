@@ -6,21 +6,24 @@ import TopBar from "@/components/common/topBar/topBar";
 import ProjectOverviewCard from "@/components/common/cards/projectOverviewCard";
 import ProjectNavigation from "../_components/tabNavigation";
 import MicroservicesCard from "@/components/common/cards/recommendationCard";
-import { RightDrawer } from "@/components/common/datagrid/drawer";
 import { cardsData } from "../_constants/dummy";
-import { recommendationCardsData } from "../_constants/dummy";
+import { RightDrawer } from "@/components/common/datagrid/drawer";
 import { ViewArtifactDrawer } from "../_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { fetchProjectById } from "@/app/extractionCard/_api/fetchProjectById/route";
+import { ProjectCard } from "../_constants/type";
 import Loader from "../loader";
+import { RecommendationCard } from "../_constants/type";
 
 export default function ExtractionCard({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  console.log("ID:", id);
 
   const [isAddArtefacts, setAddArtefacts] = useState<boolean>(false);
   const [project, setProject] = useState<{ name: string } | null>(null);
+  const [projectdetails, setProjectDetails] = useState<ProjectCard | null>(null);
   const [selectedTab, setSelectedTab] = useState("project-overview");
-
+  const [recommendationCards, setRecommendationCards] = useState<RecommendationCard[]>([]);; 
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -36,26 +39,96 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
     fetchProject();
   }, [id]);
 
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        console.log("Fetching project with ID:", id);
+        const projectData = await fetch(`/api/projectCard?project_id=${id}`);
+        const json = await projectData.json();
+
+        if (json.success) {
+          setProjectDetails(json.data);
+        } else {
+          console.error("Project not found:", json.error);
+        }
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      }
+    };
+
+    fetchProject();
+  }, [id]);
+
+  useEffect(() => {
+    async function fetchRecommendationCards() {
+      const response = await fetch('/api/recommendationCard');
+      if (response.ok) {
+        const data = await response.json();
+        setRecommendationCards(data);
+      } else {
+        console.error('Error fetching recommendation cards');
+      }
+    }
+
+    fetchRecommendationCards();
+  }, []);
+
   const handleClickAddArtefacts = () => {
     setAddArtefacts(!isAddArtefacts);
   };
+  
 
   const renderCards = () => {
     if (selectedTab === "project-overview") {
-      return cardsData.map((card, index) => (
-        <div key={index}>
+      const keyValuePairs = [
+        { key: "Project ID", value: projectdetails?.id || "N/A" },
+        {
+          key: "Created On",
+          value:
+            projectdetails?.created_on
+              ? new Date(projectdetails.created_on).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })
+              : "N/A",
+        },
+        {
+          key: "Updated On",
+          value:
+            projectdetails?.modified_on
+              ? new Date(projectdetails.modified_on).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })
+              : "N/A",
+        },
+        { key: "Created By", value: projectdetails?.created_by || "N/A" },
+      ];
+      return (
+        <>
           <ProjectOverviewCard
-            title={card.title}
-            keyValuePairs={card.keyValuePairs}
-            imageUrl={card.imageUrl}
+            title="Project Info"
+            keyValuePairs={keyValuePairs}
+            imageUrl="/assets/projectInfo.svg"
           />
-        </div>
-      ));
+          {cardsData.map((card, index) => (
+            <div key={index}>
+              <ProjectOverviewCard
+                title={card.title}
+                keyValuePairs={card.keyValuePairs}
+                imageUrl={card.imageUrl}
+              />
+            </div>
+          ))}
+        </>
+      );
     } else if (selectedTab === "modernisation") {
-      return recommendationCardsData.map((card, index) => (
+      return recommendationCards.map((card, index) => (
         <div key={index}>
           <MicroservicesCard
-            imageSrc={card.imageSrc}
+            imagesrc={card.imagesrc}
             title={card.title}
             benefit={card.benefit}
             risk={card.risk}
