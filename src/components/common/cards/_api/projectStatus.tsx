@@ -20,9 +20,16 @@ async function fetchProjectData(): Promise<Project[]> {
   return data as Project[];
 }
 
-export const ProjectStatusCardServer = async (): Promise<CardProps[]> => {
+export const ProjectStatusCardServer = async (): Promise<{
+  cardsData: CardProps[];
+  isEmpty: boolean;
+}> => {
   try {
     const data = await fetchProjectData();
+
+    // Check if the data is empty
+    const isEmpty = data.length === 0;
+
     const cardsData: CardProps[] = data.map((project: Project) => ({
       id: project.id,
       title: project.name,
@@ -43,9 +50,10 @@ export const ProjectStatusCardServer = async (): Promise<CardProps[]> => {
       ],
       progress: 60,
     }));
-    return cardsData;
+
+    return { cardsData, isEmpty };
   } catch (error) {
     console.error('Error fetching project data:', error);
-    return [];
+    return { cardsData: [], isEmpty: true }; 
   }
 };
