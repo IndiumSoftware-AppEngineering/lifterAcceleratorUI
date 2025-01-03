@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     // Query the database to check if the user exists
     const userResults = await query({
-      query: 'SELECT * FROM registration WHERE email = $1 AND password = $2',
+      query: 'SELECT * FROM users WHERE email_id = $1 AND password = $2',
       values: [email, password],
     });
 
@@ -31,9 +31,9 @@ export async function POST(req: NextRequest) {
     const user = {
       id: userResults.rows[0].id,
       username: userResults.rows[0].username,
-      surname: userResults.rows[0].surname,
-      email: userResults.rows[0].email,
-      phone: userResults.rows[0].phone,
+      name: userResults.rows[0].name, // Assuming you have a "name" column
+      email: userResults.rows[0].email_id, // Use email_id here
+      org_id: userResults.rows[0].org_id, // Assuming you have an "org_id" column
     };
 
     return NextResponse.json(

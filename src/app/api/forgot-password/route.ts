@@ -35,7 +35,7 @@ export async function PUT(req: NextRequest) {
 
     // Check if user exists
     const userResults = await query({
-      query: 'SELECT * FROM registration WHERE email = $1',
+      query: 'SELECT * FROM users WHERE email_id = $1',
       values: [email],
     });
 
@@ -49,12 +49,12 @@ export async function PUT(req: NextRequest) {
     // Update password
     await query({
       query: `
-        UPDATE registration 
+        UPDATE users 
         SET 
           password = $1, 
           modified_by = 'PASSWORD_RESET',
           modified_on = CURRENT_TIMESTAMP
-        WHERE email = $2
+        WHERE email_id = $2
       `,
       values: [newPassword, email],
     });

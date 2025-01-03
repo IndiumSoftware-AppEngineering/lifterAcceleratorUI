@@ -1,28 +1,45 @@
 "use client";
-import AnimatedSideNav from "@/components/common/sideBar/animatedSideNav"; 
+import React, { useState, useEffect } from "react";
+import { use } from "react";
+import AnimatedSideNav from "@/components/common/sideBar/animatedSideNav";
 import TopBar from "@/components/common/topBar/topBar";
 import ProjectOverviewCard from "@/components/common/cards/projectOverviewCard";
-import React, { useState } from "react";
-import ProjectNavigation from "./_components/tabNavigation";
+import ProjectNavigation from "../_components/tabNavigation";
 import MicroservicesCard from "@/components/common/cards/recommendationCard";
 import { RightDrawer } from "@/components/common/datagrid/drawer";
-import { cardsData } from "./_constants/dummy";
-import { recommendationCardsData } from "./_constants/dummy";
-import { ViewArtifactDrawer } from "./_components/drawerContent";
+import { cardsData } from "../_constants/dummy";
+import { recommendationCardsData } from "../_constants/dummy";
+import { ViewArtifactDrawer } from "../_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ComplianceStatus from "../dashboard/_components/statusGrid/compilanceStatusGrid";
+import { fetchProjectById } from "@/app/extractionCard/_api/fetchProjectById/route";
+import Loader from "../loader";
 
-export default function Page() {
+export default function ExtractionCard({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+
   const [isAddArtefacts, setAddArtefacts] = useState<boolean>(false);
+  const [project, setProject] = useState<{ name: string } | null>(null);
+  const [selectedTab, setSelectedTab] = useState("project-overview");
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        console.log("Fetching project with ID:", id);
+        const projectData = await fetchProjectById(id);
+        console.log("Project data:", projectData);
+        setProject(projectData);
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      }
+    };
+
+    fetchProject();
+  }, [id]);
 
   const handleClickAddArtefacts = () => {
     setAddArtefacts(!isAddArtefacts);
   };
 
-  // State to track selected tab
-  const [selectedTab, setSelectedTab] = useState("project-overview");
-
-  // Filter cards based on selected tab
   const renderCards = () => {
     if (selectedTab === "project-overview") {
       return cardsData.map((card, index) => (
@@ -49,13 +66,15 @@ export default function Page() {
     return null;
   };
 
+  if (!project) {
+    return <Loader />;
+  }
+
   return (
     <div className="flex h-screen bg-gray-100 w-full">
       <AnimatedSideNav />
 
-      {/* Main content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top bar */}
         <TopBar />
 
         <div className="flex items-center px-6 py-4 shadow-sm">
@@ -63,7 +82,7 @@ export default function Page() {
 
           <div className="flex items-center space-x-2 ml-4 flex-1">
             <h1 className="text-2xl font-bold text-[#444A61]">
-              Natural Language Processing Engine
+              {project.name}
             </h1>
             <div className="bg-[#CFFCD0] text-[#0C7603] px-3 py-1 rounded-full text-sm font-bold">
               Extraction Completed
@@ -82,11 +101,8 @@ export default function Page() {
           setSelectedTab={setSelectedTab}
           currentStatus={selectedTab}
         />
-
-        {/* Dashboard Content */}
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
           <div className="p-6 space-y-4">
-            {/* Render cards based on selected tab */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
               {renderCards()}
             </div>
@@ -95,8 +111,7 @@ export default function Page() {
             isOpen={isAddArtefacts}
             toggleDrawer={handleClickAddArtefacts}
           >
-            <ViewArtifactDrawer projectName="Natural Language processing Engine" />
-            {/* <ComplianceStatus/> */}
+            <ViewArtifactDrawer projectName={project.name} />
           </RightDrawer>
         </main>
       </div>

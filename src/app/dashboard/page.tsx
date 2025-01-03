@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import { ProjectStatusCardServer } from '@/components/common/cards/_api/projectStatus';
 import { DashboardClientWrapper } from './_components/dashboardClientWrapper';
 import dynamic from 'next/dynamic';
-import { useAppContext } from '@/context';
 
 // Dynamic imports for client components
 const AnimatedSideNav = dynamic(() => import('@/components/common/sideBar/animatedSideNav'), { ssr: true });
@@ -13,7 +12,8 @@ const ProjectStatusCard = dynamic(() => import('@/components/common/cards/projec
 
 export default async function Page() {
   // Fetch project data server-side
-  const projectCards = await ProjectStatusCardServer();
+  const { cardsData, isEmpty } = await ProjectStatusCardServer();
+
   return (
     <div className='flex h-screen bg-gray-100 w-[-webkit-fill-available]'>
       <AnimatedSideNav />
@@ -53,13 +53,19 @@ export default async function Page() {
             <div className='space-y-4'>
               {/* Client-side interactive components */}
               <DashboardClientWrapper />
-              
+
               {/* Server-side rendered project cards */}
               {/* <Suspense fallback={<div>Loading projects...</div>}> */}
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                  {projectCards.map((card, index) => (
-                    <ProjectStatusCard key={index} {...card} />
-                  ))}
+                  {isEmpty ? (
+                    <div className='text-center text-gray-500 py-6'>
+                      <p style={{textAlign: 'center'}}>No projects found. Create a new project to get started.</p>
+                    </div>
+                  ) : (
+                    cardsData.map((card, index) => (
+                      <ProjectStatusCard key={index} {...card} />
+                    ))
+                  )}
                 </div>
               {/* </Suspense> */}
             </div>
