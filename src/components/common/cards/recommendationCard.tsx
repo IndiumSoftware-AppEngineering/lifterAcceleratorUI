@@ -2,14 +2,14 @@ import Image from 'next/image';
 import { Card, CardContent } from "@/components/ui/card";
 
 interface MicroservicesCardProps {
-  imageSrc: string;
+  imagesrc: string;
   title: string;
   benefit: string;
   risk: string;
 }
 
 export default function MicroservicesCard({
-  imageSrc,
+  imagesrc,
   title,
   benefit,
   risk,
@@ -20,7 +20,7 @@ export default function MicroservicesCard({
         <div className="flex items-center gap-6">
           <div className="s">
             <Image
-              src={imageSrc}
+              src={imagesrc}
               alt={`${title} image`}
               width={122}
               height={144}
