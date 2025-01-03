@@ -10,9 +10,10 @@ import { useAppContext } from '@/context';
 export function DashboardClientWrapper() {
   const [isCreateNewProject, setIsCreateNewProject] = useState<boolean>(false);
   const [drawerContent, setDrawerContent] = useState<'createProject' | 'addArtifacts' | null>('createProject');
-  const {projectId} = useAppContext();
+
   const handleClickNewProject = () => {
     setIsCreateNewProject(!isCreateNewProject);
+    setDrawerContent('createProject');
   };
 
   const handleAddArtifacts = () => {
@@ -40,11 +41,10 @@ export function DashboardClientWrapper() {
         )}
         {drawerContent === 'addArtifacts' && (
           <ArtifactIngestionDrawerContent
-            onCancel={() => setIsCreateNewProject(false)}
+            onCancel={() => { setIsCreateNewProject(false) }}
           />
         )}
       </RightDrawer>
-      <Toaster />
     </>
   );
 }

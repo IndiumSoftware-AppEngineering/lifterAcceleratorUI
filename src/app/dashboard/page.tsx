@@ -59,7 +59,7 @@ export default async function Page() {
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                   {isEmpty ? (
                     <div className='text-center text-gray-500 py-6'>
-                      <p style={{textAlign: 'center'}}>No projects found. Create a new project to get started.</p>
+                      <p style={{textAlign: 'center', fontWeight: "bold"}}>No projects found. Create a new project to get started.</p>
                     </div>
                   ) : (
                     cardsData.map((card, index) => (

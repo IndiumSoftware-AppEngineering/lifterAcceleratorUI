@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { ArtifactCard } from "@/components/common/cards/artifactCard";
 import { projectNameProp } from "../_constants/type";
+import { usePathname } from "next/navigation";
 
 export function ViewArtifactDrawer({ projectName }: projectNameProp) {
   const [artifacts, setArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+  const id = usePathname().split("/").pop();
   useEffect(() => {
     // Fetch artifact data from the API
     async function fetchArtifacts() {
+      
       try {
-        const response = await fetch("/api/artifacts?projid=1"); // Adjust projid dynamically as needed
+        const response = await fetch(`/api/artifacts?projid=${id}`); // Adjust projid dynamically as needed
         if (!response.ok) {
           const errorData = await response.json();
           setError(errorData.message || "Failed to fetch artifacts.");
@@ -42,7 +44,7 @@ export function ViewArtifactDrawer({ projectName }: projectNameProp) {
 
           {/* Handle loading and error states */}
           {loading && <p>Loading artifacts...</p>}
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500 flex justify-center align-middle font-bold">{error}</p>}
 
           {!loading && !error && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -55,18 +57,6 @@ export function ViewArtifactDrawer({ projectName }: projectNameProp) {
                   author={artifact.created_by}
                 />
               ))}
-
-              <div className="flex justify-center items-center">
-                <button
-                  className="px-6 py-2 text-sm font-semibold rounded-md"
-                  style={{
-                    backgroundColor: "#E8E6FF",
-                    color: "#172B9E",
-                  }}
-                >
-                  + More
-                </button>
-              </div>
             </div>
           )}
         </div>

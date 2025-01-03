@@ -12,6 +12,8 @@ import { Loader } from "@/components/common/loaders/loader";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { config } from "process";
+import { useAppContext } from "@/context";
+import { Toaster } from "@/components/ui/toaster";
 export function DropdownMenuOptions({
   selectedOption,
   onOptionSelect,
@@ -23,6 +25,7 @@ export function DropdownMenuOptions({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast()
+  const {projectId} = useAppContext();
   const getSelectedOptionLabel = () =>
     DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.label ||
     "Choose an Option";
@@ -36,12 +39,12 @@ export function DropdownMenuOptions({
   const handleFieldBlur = (field: string, value: string) => {
     setFormErrors((prevErrors) => validateField(field, value, prevErrors));
   };
-
+  
   const handleSubmit = async () => {
     const selectedOptionData = DROPDOWN_OPTIONS.find(
       (option) => option.id === selectedOption
     );
-  
+    
     if (!selectedOptionData) {
       toast({
         variant: "destructive",
@@ -50,9 +53,8 @@ export function DropdownMenuOptions({
       });
       return;
     }
-  
+    
     const { fields } = selectedOptionData;
-  
     const newErrors = validateForm(fields, formData);
     setFormErrors(newErrors);
 
@@ -66,8 +68,8 @@ export function DropdownMenuOptions({
           artifact_type: "Github",
           artifact_config: configPayload,
           org_id: 1,
-          project_id: 1,
-          created_by: "admin@example.com",
+          project_id: projectId,
+          created_by: "nirai@indium.com",
           created_on: "2025-01-01T10:00:00Z",
           modified_by: "user@example.com",
           modified_on: "2025-01-02T12:00:00Z",
@@ -88,13 +90,13 @@ export function DropdownMenuOptions({
         const data = await response.json();
         console.log("API response:", data);
         setLoading(false);
-        onCancel();
         toast({
-          title: "download successful",
+          title: "Configuration Successful",
           variant: "default",
-          description: "Git Ingestion configured",
+          description: `Git Ingestion for ${formData.name} configured`,
           action: <ToastAction altText="Okay">Okay</ToastAction>,
         })
+        setFormData({});
       } catch (error: unknown) {
         let errorMessage = "An unknown error occurred";
         if (error instanceof Error) {
@@ -103,13 +105,13 @@ export function DropdownMenuOptions({
         } else {
             console.error(errorMessage);
         }
-        onCancel();
         toast({
             variant: "destructive",
             title: "download failed",
             description: errorMessage,
             action: <ToastAction altText="Try again">Try Again</ToastAction>,
         });
+        setFormData({});
     }
     }
   };
@@ -230,7 +232,9 @@ export function DropdownMenuOptions({
                 >
                   Get Repo
                 </Button>
+                <Toaster />
               </div>
+              
             ) : (
               <div className="mt-10">
                 <Loader />

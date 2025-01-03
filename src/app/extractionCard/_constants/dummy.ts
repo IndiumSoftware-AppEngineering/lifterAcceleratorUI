@@ -79,3 +79,29 @@ export const cardsData = [
       },
   ];
   
+  export const recommendationCardsData = [
+    {
+      imageSrc: "/assets/hex.jpg",
+      title: "Modernisation Approach 1",
+      benefit: "Improves system efficiency and scalability.",
+      risk: "Requires significant initial investment.",
+    },
+    {
+      imageSrc: "/assets/hex.jpg",
+      title: "Modernisation Approach 2",
+      benefit: "Reduces operational costs in the long term.",
+      risk: "Might disrupt existing workflows during implementation.",
+    },
+    {
+      imageSrc: "/assets/hex.jpg",
+      title: "Modernisation Approach 2",
+      benefit: "Reduces operational costs in the long term.",
+      risk: "Might disrupt existing workflows during implementation.",
+    },
+    {
+      imageSrc: "/assets/hex.jpg",
+      title: "Modernisation Approach 2",
+      benefit: "Reduces operational costs in the long term.",
+      risk: "Might disrupt existing workflows during implementation.",
+    },
+  ];
