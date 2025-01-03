@@ -6,24 +6,27 @@ import TopBar from "@/components/common/topBar/topBar";
 import ProjectOverviewCard from "@/components/common/cards/projectOverviewCard";
 import ProjectNavigation from "../_components/tabNavigation";
 import MicroservicesCard from "@/components/common/cards/recommendationCard";
-import { cardsData } from "../_constants/dummy";
+import { cardsData, recommendationCardsData } from "../_constants/dummy";
 import { RightDrawer } from "@/components/common/datagrid/drawer";
 import { ViewArtifactDrawer } from "../_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { fetchProjectById } from "@/app/extractionCard/_api/fetchProjectById/route";
-import { ProjectCard } from "../_constants/type";
+import { ProjectCard, RecommendationCard } from "../_constants/type";
 import Loader from "../loader";
-import { RecommendationCard } from "../_constants/type";
+import { ArtifactIngestionDrawerContent } from "@/app/dashboard/_components/gitIngestion/drawerContent";
+import { useAppContext } from "@/context";
+import { useRouter } from "next/navigation";
 
 export default function ExtractionCard({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  console.log("ID:", id);
-
-  const [isAddArtefacts, setAddArtefacts] = useState<boolean>(false);
+  const {setProjectId} = useAppContext();
+  const navigate = useRouter();
+  const [viewArtifacts, setViewArtifacts] = useState<boolean>(false);
   const [project, setProject] = useState<{ name: string } | null>(null);
   const [projectdetails, setProjectDetails] = useState<ProjectCard | null>(null);
   const [selectedTab, setSelectedTab] = useState("project-overview");
-  const [recommendationCards, setRecommendationCards] = useState<RecommendationCard[]>([]);; 
+  const [drawerContent, setDrawerContent] = useState<'viewArtifacts' | 'addArtifacts' | null>('viewArtifacts');  
+  // const [recommendationCards, setRecommendationCards] = useState<RecommendationCard[]>(recommendationCardsData);; 
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -59,24 +62,20 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
     fetchProject();
   }, [id]);
 
-  useEffect(() => {
-    async function fetchRecommendationCards() {
-      const response = await fetch('/api/recommendationCard');
-      if (response.ok) {
-        const data = await response.json();
-        setRecommendationCards(data);
-      } else {
-        console.error('Error fetching recommendation cards');
-      }
-    }
-
-    fetchRecommendationCards();
-  }, []);
 
   const handleClickAddArtefacts = () => {
-    setAddArtefacts(!isAddArtefacts);
+    setViewArtifacts(!viewArtifacts);
+    setDrawerContent("viewArtifacts");
   };
-  
+
+  const handleClickAddMoreArtefacts = () => {
+    setProjectId(id)
+    setDrawerContent('addArtifacts');
+  }
+
+  const handleBackClick = () => {
+    navigate.push('/dashboard')
+  }
 
   const renderCards = () => {
     if (selectedTab === "project-overview") {
@@ -125,10 +124,10 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
         </>
       );
     } else if (selectedTab === "modernisation") {
-      return recommendationCards.map((card, index) => (
+      return recommendationCardsData.map((card, index) => (
         <div key={index}>
           <MicroservicesCard
-            imagesrc={card.imagesrc}
+            imagesrc={card.imageSrc}
             title={card.title}
             benefit={card.benefit}
             risk={card.risk}
@@ -151,7 +150,7 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
         <TopBar />
 
         <div className="flex items-center px-6 py-4 shadow-sm">
-          <ArrowBackIcon className="text-[#434A60] cursor-pointer text-lg" />
+          <ArrowBackIcon className="text-[#434A60] cursor-pointer text-lg" onClick={handleBackClick} />
 
           <div className="flex items-center space-x-2 ml-4 flex-1">
             <h1 className="text-2xl font-bold text-[#444A61]">
@@ -181,10 +180,31 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
             </div>
           </div>
           <RightDrawer
-            isOpen={isAddArtefacts}
+            isOpen={viewArtifacts}
             toggleDrawer={handleClickAddArtefacts}
           >
-            <ViewArtifactDrawer projectName={project.name} />
+            {drawerContent === "viewArtifacts" &&
+              <>
+                <ViewArtifactDrawer projectName={project.name} />
+                <div className="flex justify-center items-center">
+                  <button
+                    className="px-6 py-2 text-sm font-semibold rounded-md"
+                    style={{
+                      backgroundColor: "#E8E6FF",
+                      color: "#172B9E",
+                    }}
+                    onClick={handleClickAddMoreArtefacts}
+                  >
+                    + More
+                  </button>
+                </div>
+              </>}
+            {drawerContent === "addArtifacts" && <ArtifactIngestionDrawerContent
+              onCancel={() => {
+                setViewArtifacts(false)
+                setDrawerContent("viewArtifacts")
+              }}
+            />}
           </RightDrawer>
         </main>
       </div>

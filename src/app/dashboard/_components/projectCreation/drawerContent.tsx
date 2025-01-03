@@ -15,6 +15,7 @@ import {
 } from '../../_constants/type';
 import { createProject } from './_api/projectCreationApi';
 import { revalidateDashboard } from '../../revalidateDashboard';
+import { useAppContext } from '@/context';
 
 export function CreateProjectDrawerContent({
   onCancel,
@@ -29,7 +30,7 @@ export function CreateProjectDrawerContent({
   const [formErrors, setFormErrors] = React.useState<FormErrors>({});
   const [showSuccessModal, setShowSuccessModal] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-
+  const {setProjectId} = useAppContext();
   const resetState = () => {
     setFormData({
       name: '',
@@ -44,7 +45,6 @@ export function CreateProjectDrawerContent({
     e.preventDefault();
 
     if (validateForm(formData, setFormErrors)) {
-      console.log('Form data:', formData);
       try {
         // Step 1: Create the project
         const result = await createProject({
@@ -52,6 +52,7 @@ export function CreateProjectDrawerContent({
         });
 
         if (result.success) {
+          setProjectId(result.data.data.id);
           // Step 2: Revalidate the dashboard
           await revalidateDashboard();
 
