@@ -110,6 +110,7 @@ export interface SignupPayload {
   created_by: string;
   created_on: string; 
   password:string;
+  role_id?:number;
 }
 export interface InputFieldProps {
   label: string;

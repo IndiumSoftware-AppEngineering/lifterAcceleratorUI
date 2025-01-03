@@ -41,10 +41,10 @@ export async function POST(req: NextRequest) {
     }
     await query({
       query: `
-        INSERT INTO users (name, username, email_id, org_id, created_by, created_on,password)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO users (name, username, email_id, org_id, created_by, created_on, password, role_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       `,
-      values: [name, username, email_id, org_id, created_by, created_on,password], // Include created_by and created_on
+      values: [name, username, email_id, org_id, created_by, created_on, password, 100], // Include role_id
     });
 
     return NextResponse.json(

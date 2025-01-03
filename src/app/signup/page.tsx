@@ -18,6 +18,7 @@ export default function Register() {
     org_id: 1,
     created_by: "admin@example.com",
     created_on: new Date().toISOString(),
+    role_id: 100,
   });
 
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -82,6 +83,7 @@ export default function Register() {
         org_id: formData.org_id,
         created_by: formData.created_by,
         created_on: formData.created_on,
+        role_id:1
       };
 
       const response = await registerUser(payload);
@@ -98,6 +100,7 @@ export default function Register() {
         org_id: 1,
         created_by: "admin@example.com",
         created_on: new Date().toISOString(),
+        role_id: formData.role_id,
       });
       setEmailError(null);
       setPasswordError(null);
