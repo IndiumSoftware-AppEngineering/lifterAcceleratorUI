@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RenderFieldsProps } from "../../_constants/type";
 
-export const RenderFields: React.FC<RenderFieldsProps> = ({
+export const RenderFields: React.FC<RenderFieldsProps & { onReset: () => void; formData: Record<string, string> }> = ({
   fields,
+  formData,
   formErrors,
   onChange,
   onBlur,
+  onReset,
 }) => {
   const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
   const [uploadedFileName, setUploadedFileName] = useState<Record<string, string>>({});
@@ -18,9 +20,15 @@ export const RenderFields: React.FC<RenderFieldsProps> = ({
   const handleFileChange = (field: string, file: File | null) => {
     if (file) {
       setUploadedFileName((prev) => ({ ...prev, [field]: file.name }));
-      onChange(field, file.name); 
+      onChange(field, file.name);
     }
   };
+
+  // Reset local states when onReset is called
+  useEffect(() => {
+    setTouchedFields({});
+    setUploadedFileName({});
+  }, [onReset]);
 
   return (
     <div>
@@ -42,6 +50,7 @@ export const RenderFields: React.FC<RenderFieldsProps> = ({
             <input
               type="text"
               placeholder={field}
+              value={formData[field] || ""} // Use formData to control the input value
               className={`p-2 border rounded text-sm w-full ${
                 touchedFields[field] && formErrors[field]
                   ? "border-red-500"

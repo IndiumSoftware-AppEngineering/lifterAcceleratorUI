@@ -102,7 +102,7 @@ export default function LoginForm() {
         setTimeout(() => {
           setSuccessMessage(null);
           router.push("/login");
-        }, 1500);
+        }, 1000);
       }
     } else {
       if (!password) {

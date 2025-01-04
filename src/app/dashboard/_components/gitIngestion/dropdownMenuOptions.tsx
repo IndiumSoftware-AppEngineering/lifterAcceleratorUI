@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useRef, useEffect } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -11,40 +11,40 @@ import { constructPayload } from "./utils/payloadConstruct";
 import { Loader } from "@/components/common/loaders/loader";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { config } from "process";
 import { useAppContext } from "@/context";
 import { Toaster } from "@/components/ui/toaster";
+
 export function DropdownMenuOptions({
   selectedOption,
   onOptionSelect,
-  onCancel,
-}: dropDownMenuProps) {
+  onDropdownReset, // Add this prop to reset the dropdown
+}: dropDownMenuProps & { onDropdownReset: () => void }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const { toast } = useToast()
-  const {projectId} = useAppContext();
+  const { toast } = useToast();
+  const { projectId } = useAppContext();
+
   const getSelectedOptionLabel = () =>
     DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.label ||
     "Choose an Option";
 
   const handleFieldChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-
     setFormErrors((prevErrors) => validateField(field, value, prevErrors));
   };
 
   const handleFieldBlur = (field: string, value: string) => {
     setFormErrors((prevErrors) => validateField(field, value, prevErrors));
   };
-  
+
   const handleSubmit = async () => {
     const selectedOptionData = DROPDOWN_OPTIONS.find(
       (option) => option.id === selectedOption
     );
-    
+
     if (!selectedOptionData) {
       toast({
         variant: "destructive",
@@ -53,7 +53,7 @@ export function DropdownMenuOptions({
       });
       return;
     }
-    
+
     const { fields } = selectedOptionData;
     const newErrors = validateForm(fields, formData);
     setFormErrors(newErrors);
@@ -61,7 +61,6 @@ export function DropdownMenuOptions({
     if (Object.keys(newErrors).length === 0) {
       setLoading(true);
       try {
-
         const configPayload = constructPayload(selectedOption || "", formData);
         const payload = {
           name: formData["Artifact Name"],
@@ -73,7 +72,9 @@ export function DropdownMenuOptions({
           created_on: "2025-01-01T10:00:00Z",
           modified_by: "user@example.com",
           modified_on: "2025-01-02T12:00:00Z",
-        }
+          status: "initialized",
+        };
+
         const response = await fetch("/api/configure-artifact", {
           method: "POST",
           headers: {
@@ -83,36 +84,47 @@ export function DropdownMenuOptions({
         });
 
         if (!response.ok) {
-          const errorData = await response.json(); // Ensure the response body is parsed correctly
-          throw new Error(errorData.message || `API error: ${response.status}`);
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || `API error: ${response.status}`
+          );
         }
 
         const data = await response.json();
         console.log("API response:", data);
-        setLoading(false);
-        toast({
+
+        // Show toast message immediately
+       toast({
           title: "Configuration Successful",
           variant: "default",
-          description: `Git Ingestion for ${formData.name} configured`,
+          description: `Git Ingestion for ${formData["Artifact Name"]} configured`,
           action: <ToastAction altText="Okay">Okay</ToastAction>,
-        })
+        });
+
+        // Reset form data and errors after successful API call
         setFormData({});
+        setFormErrors({});
+
+        // Reset the dropdown to its initial state
+        onDropdownReset();
+
+        setLoading(false);
       } catch (error: unknown) {
         let errorMessage = "An unknown error occurred";
         if (error instanceof Error) {
-            errorMessage = error.message;
-            console.error(error.message);
+          errorMessage = error.message;
+          console.error(error.message);
         } else {
-            console.error(errorMessage);
+          console.error(errorMessage);
         }
         toast({
-            variant: "destructive",
-            title: "download failed",
-            description: errorMessage,
-            action: <ToastAction altText="Try again">Try Again</ToastAction>,
+          variant: "destructive",
+          title: "Download failed",
+          description: errorMessage,
+          action: <ToastAction altText="Try again">Try Again</ToastAction>,
         });
-        setFormData({});
-    }
+        setLoading(false);
+      }
     }
   };
 
@@ -179,16 +191,18 @@ export function DropdownMenuOptions({
                   <li
                     key={option.id}
                     onClick={() => onOptionSelect(option.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded cursor-pointer transition-all text-sm ${selectedOption === option.id
+                    className={`flex items-center gap-2 px-4 py-2 rounded cursor-pointer transition-all text-sm ${
+                      selectedOption === option.id
                         ? "bg-indigo-50 text-indigo-700 font-medium"
                         : "hover:bg-gray-100"
-                      }`}
+                    }`}
                   >
                     <CheckCircleOutlineIcon
-                      className={`w-4 h-4 ${selectedOption === option.id
+                      className={`w-4 h-4 ${
+                        selectedOption === option.id
                           ? "text-[#172B9E]"
                           : "text-gray-300"
-                        }`}
+                      }`}
                     />
                     <span>{option.label}</span>
                   </li>
@@ -197,16 +211,6 @@ export function DropdownMenuOptions({
             </div>
           )}
         </div>
-        {/* <input
-              type="text"
-              placeholder="Artifact Name"
-              className={`p-2 border rounded text-sm w-full ${
-                formErrors["Artifact Name"]
-                  ? "border-red-500"
-                  : "border-gray-300"
-              }`}
-              onChange={(e) => onNameChange(e.target.value)}
-        /> */}
         {selectedOption && (
           <>
             <RenderFields
@@ -215,9 +219,14 @@ export function DropdownMenuOptions({
                 DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)
                   ?.fields || []
               }
+              formData={formData}
               formErrors={formErrors}
               onChange={handleFieldChange}
               onBlur={handleFieldBlur}
+              onReset={() => {
+                setFormData({});
+                setFormErrors({});
+              }}
             />
             {!loading ? (
               <div className="flex justify-center mt-4">
@@ -232,9 +241,7 @@ export function DropdownMenuOptions({
                 >
                   Get Repo
                 </Button>
-                <Toaster />
               </div>
-              
             ) : (
               <div className="mt-10">
                 <Loader />
@@ -243,6 +250,7 @@ export function DropdownMenuOptions({
           </>
         )}
       </div>
+      <Toaster />
     </div>
   );
 }

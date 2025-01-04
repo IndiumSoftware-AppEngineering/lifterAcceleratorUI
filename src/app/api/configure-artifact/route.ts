@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
       project_id,
       created_by,
       created_on,
+      status, // Ensure status is included
     } = body;
 
     if (
@@ -23,7 +24,8 @@ export async function POST(req: NextRequest) {
       !org_id ||
       !project_id ||
       !created_by ||
-      !created_on
+      !created_on ||
+      !status // Ensure status is validated
     ) {
       return NextResponse.json(
         { error: "All required fields must be provided." },
@@ -39,12 +41,13 @@ export async function POST(req: NextRequest) {
         artifact_config, 
         org_id, 
         project_id, 
+        status, 
         active, 
         created_by, 
         created_on, 
         modified_by, 
         modified_on
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       RETURNING *;
     `;
 
@@ -54,6 +57,7 @@ export async function POST(req: NextRequest) {
       JSON.stringify(artifact_config), // Convert artifact_config to JSON string
       org_id,
       project_id,
+      status, // Include status in the values array
       true, // Default value for 'active'
       created_by,
       new Date(created_on), // Convert to a valid timestamp

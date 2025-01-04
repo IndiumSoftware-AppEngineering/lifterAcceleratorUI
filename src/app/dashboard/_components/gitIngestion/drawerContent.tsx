@@ -23,6 +23,9 @@ export function ArtifactIngestionDrawerContent({
     setStatus(newStatus);
     setIsDropdownOpen(false);
   };
+  const handleDropdownReset = () => {
+    setSelectedOption(null); // Reset the dropdown to its initial state
+  };
   return (
     <div className="flex flex-col h-screen bg-white">
       <div className='border-b p-2'>
@@ -98,6 +101,7 @@ export function ArtifactIngestionDrawerContent({
             selectedOption={selectedOption}
             onOptionSelect={setSelectedOption}
             onCancel={onCancel}
+            onDropdownReset={handleDropdownReset} 
           />
         )}
         {selectedIcon === "globe" && <WebScrapper />}
