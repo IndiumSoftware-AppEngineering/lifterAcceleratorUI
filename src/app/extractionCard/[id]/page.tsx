@@ -11,22 +11,23 @@ import { RightDrawer } from "@/components/common/datagrid/drawer";
 import { ViewArtifactDrawer } from "../_components/drawerContent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { fetchProjectById } from "@/app/extractionCard/_api/fetchProjectById/route";
-import { ProjectCard, RecommendationCard } from "../_constants/type";
+import { ProjectCard } from "../_constants/type";
 import Loader from "../loader";
 import { ArtifactIngestionDrawerContent } from "@/app/dashboard/_components/gitIngestion/drawerContent";
 import { useAppContext } from "@/context";
 import { useRouter } from "next/navigation";
+import LifterChat from "@/app/lifterChat/page";
 
 export default function ExtractionCard({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const {setProjectId} = useAppContext();
+  const { setProjectId } = useAppContext();
   const navigate = useRouter();
   const [viewArtifacts, setViewArtifacts] = useState<boolean>(false);
   const [project, setProject] = useState<{ name: string } | null>(null);
   const [projectdetails, setProjectDetails] = useState<ProjectCard | null>(null);
   const [selectedTab, setSelectedTab] = useState("project-overview");
-  const [drawerContent, setDrawerContent] = useState<'viewArtifacts' | 'addArtifacts' | null>('viewArtifacts');  
-  // const [recommendationCards, setRecommendationCards] = useState<RecommendationCard[]>(recommendationCardsData);; 
+  const [drawerContent, setDrawerContent] = useState<'viewArtifacts' | 'addArtifacts' | null>('viewArtifacts');
+
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -61,7 +62,6 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
 
     fetchProject();
   }, [id]);
-
 
   const handleClickAddArtefacts = () => {
     setViewArtifacts(!viewArtifacts);
@@ -134,6 +134,12 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
           />
         </div>
       ));
+    } else if (selectedTab === "lifter-chat") {
+      return (
+        <div className="h-[calc(100vh-12rem)] w-full min-w-[1200px]">
+          <LifterChat />
+        </div>
+      );
     }
     return null;
   };
