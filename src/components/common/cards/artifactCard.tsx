@@ -36,7 +36,7 @@ function getIconForFile(type: string) {
     case 'Github':
       return <GitHubIcon className='h-6 w-6 text-purple-500' />;
     default:
-      return <DescriptionIcon className='h-6 w-6 text-gray-400' />; // Default file icon
+      return <GitHubIcon className='h-6 w-6 text-purple-500' />; // Default file icon
   }
 }
 

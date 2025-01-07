@@ -1,64 +1,67 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import OpenAI from 'openai';
-import { loadAndSplitTheDocs, vectorSaveAndSearch, generatePrompt } from '@/lib/rag';
 import { NextRequest, NextResponse } from 'next/server';
+import { createOllama } from 'ollama-ai-provider';
+import { streamText } from 'ai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+
+const ollama = createOllama({});
 
 export const maxDuration = 300;
 
 export async function POST(req: NextRequest) {
   let messages: any[]; // An array to store the messages
   let file: File | null = null;
-
+  let projectId: string;
   const contentType = req.headers.get('content-type');
   if (contentType && contentType.includes('multipart/form-data')) {
     const formData = await req.formData();
     messages = JSON.parse(formData.get('messages') as string);
     file = formData.get('file') as File | null;
+    projectId = (formData.get('projectId') as string);
   } else {
     const body = await req.json();
     messages = body.messages;
+    projectId = body.projectId;
   }
 
   let context = '';
+  const lastMessage = messages[messages.length - 1]?.content;
+  console.log(projectId,"projectId");
+  if (lastMessage) {
+    // Replace `1` with your actual project_id or make it dynamic.
+    const projectId1 = '1';
+    const queryParams = new URLSearchParams({
+      project_id: projectId,
+      query: lastMessage,
+    });
 
-  if (file) {
-    const fileBuffer = await file.arrayBuffer();
-    const splits = await loadAndSplitTheDocs(Buffer.from(fileBuffer));
-    const lastMessage = messages[messages.length - 1];
-    const searches = await vectorSaveAndSearch(splits, lastMessage.content);
-    context = await generatePrompt(searches, lastMessage.content);
+    // Call the Python server to get the context
+    const contextResponse = await fetch(
+      `http://localhost:8000/llm-service/embedding/query-embeddings?${queryParams.toString()}`,
+      { method: 'GET' }
+    );
+
+    if (contextResponse.ok) {
+      context = await contextResponse.text(); // Assuming the context is returned as plain text
+    } else {
+      console.error('Error retrieving context:', await contextResponse.text());
+    }
   }
 
+  console.log(context,"context");
   try {
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+    const result = await streamText({
+      model: ollama("llama3.2"),
       messages: [
-        ...(context ? [{ role: 'system', content: context }] : []),//combines the context with message(Request)
+        ...(context ? [{ role: 'system', content: context }] : []),
         ...messages,
       ],
-      stream: true, // Enable streaming
+      temperature: 0
     });
 
-    // Create a ReadableStream for the response
-    const stream = new ReadableStream({
-      async start(controller) {
-        const encoder = new TextEncoder();
-        for await (const chunk of response) {
-          const content = chunk.choices[0]?.delta?.content || '';
-          controller.enqueue(encoder.encode(content));
-        }
-        controller.close();
-      },
-    });
-
-    return new NextResponse(stream, {
+    return new NextResponse(result.textStream, {
       headers: { 'Content-Type': 'text/plain' },
     });
+  
   } catch (error) {
     console.error('Error calling OpenAI API:', error);
     return new NextResponse('Internal Server Error', { status: 500 });

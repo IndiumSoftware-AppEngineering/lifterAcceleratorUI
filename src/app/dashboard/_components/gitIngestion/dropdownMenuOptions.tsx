@@ -26,7 +26,7 @@ export function DropdownMenuOptions({
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const { projectId } = useAppContext();
-
+  const [dropdown, setDropdown] = useState<String[]>([]);
   const getSelectedOptionLabel = () =>
     DROPDOWN_OPTIONS.find((option) => option.id === selectedOption)?.label ||
     "Choose an Option";
@@ -63,16 +63,16 @@ export function DropdownMenuOptions({
       try {
         const configPayload = constructPayload(selectedOption || "", formData);
         const payload = {
-          name: formData["Artifact Name"],
-          artifact_type: "Github",
+          name: formData["DropDownField"],
           artifact_config: configPayload,
+          artifact_type_id: 1,
           org_id: 1,
-          project_id: projectId,
+          project_id: parseInt(projectId || "1"),
           created_by: "nirai@indium.com",
           created_on: "2025-01-01T10:00:00Z",
           modified_by: "user@example.com",
           modified_on: "2025-01-02T12:00:00Z",
-          status: "initialized",
+          status: "SUBMITTED",
         };
 
         const response = await fetch("/api/configure-artifact", {

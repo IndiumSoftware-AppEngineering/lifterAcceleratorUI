@@ -7,6 +7,7 @@ import ChatMessages from "./chatMessages";
 import ChatInput from "./chatInput";
 import FileUploadModal from "./fileUploadModal";
 import { ChatHistory } from "../dashboard/_constants/type";
+import { useAppContext } from "@/context";
 
 declare global {
   interface Window {
@@ -44,6 +45,7 @@ export default function LifterChat() {
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
+  const { projectId } = useAppContext();
   useEffect(() => {
     if (messages.length > 0 && currentChatId) {
       setChatHistory((prev) =>
@@ -111,6 +113,8 @@ export default function LifterChat() {
     if (selectedFile) {
       formData.append("file", selectedFile);
     }
+
+    formData.append("projectId", (projectId ?? 0).toString());
 
     setInput("");
     setSelectedFile(null);
@@ -209,7 +213,7 @@ export default function LifterChat() {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-4">
-          <div className="max-w-3xl mx-auto">
+          <div >
             <ChatMessages messages={messages} loading={loading} />
           </div>
         </div>

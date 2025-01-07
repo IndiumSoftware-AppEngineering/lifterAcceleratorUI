@@ -17,7 +17,6 @@ export async function GET(req: Request) {
     const sqlQuery = `
       SELECT 
         name AS artifact_name, 
-        artifact_type, 
         created_by, 
         created_on 
       FROM artifact 

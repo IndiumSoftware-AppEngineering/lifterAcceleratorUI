@@ -59,7 +59,7 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
         console.error("Error fetching project:", error);
       }
     };
-
+    setProjectId(id)
     fetchProject();
   }, [id]);
 
@@ -136,9 +136,7 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
       ));
     } else if (selectedTab === "lifter-chat") {
       return (
-        <div className="h-[calc(100vh-12rem)] w-full min-w-[1200px]">
           <LifterChat />
-        </div>
       );
     }
     return null;
@@ -181,9 +179,12 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
         />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
           <div className="p-6 space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+            {selectedTab !== "lifter-chat" && <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
               {renderCards()}
-            </div>
+            </div>}
+            {selectedTab === "lifter-chat" && <div className="w-full h-full">
+              {renderCards()}
+            </div>}
           </div>
           <RightDrawer
             isOpen={viewArtifacts}

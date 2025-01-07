@@ -3,7 +3,8 @@ import { Card } from "@/components/ui/card";
 import { Message } from "ai/react";
 import { useState } from "react";
 import { Person, SmartToy } from "@mui/icons-material"; 
-
+import FormattedMessage from "./formattedMessage";
+import ReactMarkdown from "react-markdown";
 interface ChatMessagesProps {
   messages: Message[];
   loading: boolean;
@@ -40,6 +41,11 @@ export default function ChatMessages({ messages, loading }: ChatMessagesProps) {
     return content.includes("```");
   };
 
+  const isMd = (content: string) => {
+    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/;
+    return content.includes("###") || content.includes("**");
+  };
+
   // Function to extract code and language from a message
   const extractCode = (content: string) => {
     const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/;
@@ -68,7 +74,7 @@ export default function ChatMessages({ messages, loading }: ChatMessagesProps) {
           {messages.map((m) => {
             const isCode = isCodeMessage(m.content);
             const codeData = isCode ? extractCode(m.content) : null;
-
+            const mdBool = isMd(m.content);
             return (
               <div
                 key={m.id}
@@ -133,9 +139,9 @@ export default function ChatMessages({ messages, loading }: ChatMessagesProps) {
                         </div>
                       )}
                     </div>
-                  ) : (
+                  ):(
                     <div className="text-gray-700 whitespace-pre-wrap">
-                      {m.content}
+                      <ReactMarkdown children={m.content} />
                     </div>
                   )}
                 </Card>
