@@ -30,7 +30,6 @@ export const validateField = (
       const value = formData[field] || "";
       errors = validateField(field, value, errors);
     });
-  
     return errors;
   };
   

@@ -8,24 +8,24 @@ export async function POST(req: NextRequest) {
     // Validate required fields
     const {
       name,
-      artifact_type,
       artifact_config,
       org_id,
       project_id,
       created_by,
       created_on,
       status, // Ensure status is included
+      artifact_type_id
     } = body;
 
     if (
       !name ||
-      !artifact_type ||
       !artifact_config ||
       !org_id ||
       !project_id ||
       !created_by ||
       !created_on ||
-      !status // Ensure status is validated
+      !status ||
+      !artifact_type_id
     ) {
       return NextResponse.json(
         { error: "All required fields must be provided." },
@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
     const insertQuery = `
       INSERT INTO artifact (
         name, 
-        artifact_type, 
         artifact_config, 
         org_id, 
         project_id, 
@@ -46,14 +45,14 @@ export async function POST(req: NextRequest) {
         created_by, 
         created_on, 
         modified_by, 
-        modified_on
+        modified_on,
+        artifact_type_id
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       RETURNING *;
     `;
 
     const values = [
       name,
-      artifact_type,
       JSON.stringify(artifact_config), // Convert artifact_config to JSON string
       org_id,
       project_id,
@@ -63,6 +62,7 @@ export async function POST(req: NextRequest) {
       new Date(created_on), // Convert to a valid timestamp
       body.modified_by || null,
       body.modified_on ? new Date(body.modified_on) : null,
+      artifact_type_id
     ];
 
     // Execute the query
