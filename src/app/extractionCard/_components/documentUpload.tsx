@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { Toaster } from "@/components/ui/toaster";
+import { useAppContext } from "@/context";
 
 
 const ALLOWED_EXTENSIONS = new Set([
@@ -14,7 +15,7 @@ export function DocumentUpload() {
   const [fileName, setFileName] = useState("");
   const [error, setError] = useState("");
   const { toast } = useToast();
-
+  const {projectId} = useAppContext();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const selectedFiles = Array.from(event.target.files);
@@ -50,7 +51,7 @@ export function DocumentUpload() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ fileName }),
+        body: JSON.stringify({ fileName, projectId }),
       });
 
       if (!artifactResponse.ok) {
@@ -59,13 +60,11 @@ export function DocumentUpload() {
 
       const artifactData = await artifactResponse.json();
       const artifactId = artifactData.artifactId;
-      console.log("Artifact ID:", artifactId);
       const formData = new FormData();
-      formData.append("artifactId", artifactId); // Append the artifactId
       files.forEach((file) => {
         formData.append("files", file); // Append each file
       });
-      const fileUploadResponse = await fetch("http://localhost:8000/files_nopermission", {
+      const fileUploadResponse = await fetch(`http://localhost:8000/files_nopermission/?artifact_id=${artifactId}`, {
         method: "POST",
         body: formData, // Send FormData (no need to set Content-Type header)
       });
@@ -77,9 +76,9 @@ export function DocumentUpload() {
       const fileUploadData = await fileUploadResponse.json();
       console.log("File Upload Response:", fileUploadData);
       toast({
-        title: "Upload Successful",
+        title: "Document Ingestion Configuration",
         variant: "default",
-        description: `File "${fileName}" uploaded successfully.`,
+        description:`Document Ingestion configured for ${fileName}`,
         action: <ToastAction altText="Okay">Okay</ToastAction>,
       });
 
@@ -90,11 +89,17 @@ export function DocumentUpload() {
       // Log "Upload successful" in the console
       console.log("Upload successful");
     } catch (error) {
-      console.error("Error uploading file:", error);
+      let errorMessage = "An unknown error occurred";
+      if (error instanceof Error) {
+          errorMessage = error.message;
+          console.error(error.message);
+      } else {
+          console.error(errorMessage);
+      }
       toast({
-        title: "Upload Failed ",
+        title: "Configuration failed ",
         variant: "destructive",
-        description: "Failed to upload the file. Please try again.",
+        description: errorMessage,
         action: <ToastAction altText="Retry">Retry</ToastAction>,
       });
     }

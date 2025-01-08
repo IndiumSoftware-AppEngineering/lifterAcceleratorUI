@@ -22,27 +22,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface PdfFileProps {
   filename: string;
   type: string;
   date: string;
   author: string;
+  status: string;
+  artifactId: number;
 }
 
-function getIconForFile(type: string) {
-
-  switch (type) {
-    case 'Github':
+function getIconForFile(artifact: number | string) {
+  const artifactNumber = typeof artifact === "string" ? parseInt(artifact, 10) : artifact;
+  switch (artifactNumber) {
+    case 1:
       return <GitHubIcon className='h-6 w-6 text-purple-500' />;
-    default:
-      return <GitHubIcon className='h-6 w-6 text-purple-500' />; // Default file icon
+    case 2:
+      return <ArticleIcon className='h-6 w-6 text-orange-400' />;
   }
 }
-
-export function ArtifactCard({ filename, type, date, author }: PdfFileProps) {
-  const fileIcon = getIconForFile(type);
-
+export function ArtifactCard({ filename, type, date, author, status,artifactId }: PdfFileProps) {
+  const fileIcon = getIconForFile(artifactId);
   return (
     <Card className='w-full p-4 flex flex-col gap-6 bg-white shadow-sm h-artifact_card_height w-artifact_card_width'>
       <div className='flex items-start'>
@@ -53,26 +54,13 @@ export function ArtifactCard({ filename, type, date, author }: PdfFileProps) {
 
         {/* Spacer to push content to the right */}
         <div className='flex-1'></div>
-
-        {/* Dropdown menu on the top-right */}
-        <div className='flex-shrink-0'>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='ghost' size='icon' className='h-8 w-8'>
-                <MoreVertical className='h-4 w-4' />
-                <span className='sr-only'>Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
-              <DropdownMenuItem>Download</DropdownMenuItem>
-              <DropdownMenuItem>Share</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        <span className="inline-flex items-center rounded-xl bg-green-50 px-2 py-2 text-xs text-green-800 font-semibold ring-1 ring-inset ring-green-700/10">
+        {status}
+      </span>
       </div>
 
       {/* Content below the icon and dropdown */}
+      <div className='flex flex-row '>
       <div className='flex-grow min-w-0'>
         <div className='flex items-center justify-between'>
           <h3 className='text-gray-900 font-bold truncate'>{filename}</h3>
@@ -80,6 +68,7 @@ export function ArtifactCard({ filename, type, date, author }: PdfFileProps) {
         <p className='text-gray-500 text-sm truncate'>
           {new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}, {author}
         </p>
+      </div>
       </div>
     </Card>
   );

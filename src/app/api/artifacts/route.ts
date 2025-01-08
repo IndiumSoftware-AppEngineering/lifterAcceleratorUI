@@ -18,7 +18,9 @@ export async function GET(req: Request) {
       SELECT 
         name AS artifact_name, 
         created_by, 
-        created_on 
+        created_on,
+        status,
+        artifact_type_id 
       FROM artifact 
       WHERE project_id = $1
     `;

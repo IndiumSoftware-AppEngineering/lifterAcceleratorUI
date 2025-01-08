@@ -74,6 +74,7 @@ export interface dropDownMenuProps {
   selectedOption: string | null;
   onOptionSelect: (option: string | null) => void;
   onCancel: () => void;
+  onDropdownReset: () => void;
 }
 export interface RenderFieldsProps {
   fields: string[];
