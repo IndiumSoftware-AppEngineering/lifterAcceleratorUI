@@ -48,13 +48,15 @@ export function ViewArtifactDrawer({ projectName }: projectNameProp) {
 
           {!loading && !error && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {artifacts.map((artifact: { artifact_name: string; artifact_type: string; created_on: string; created_by: string }, index: number) => (
+              {artifacts.map((artifact: { artifact_name: string; artifact_type: string; created_on: string; created_by: string; status:string; artifact_type_id: number }, index: number) => (
                 <ArtifactCard
                   key={index}
                   filename={artifact.artifact_name}
                   type={artifact.artifact_type} // Update as per your `ArtifactCard` prop requirements
                   date={artifact.created_on}
                   author={artifact.created_by}
+                  status={artifact.status}
+                  artifactId={artifact.artifact_type_id}
                 />
               ))}
             </div>

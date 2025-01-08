@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
 
   let context = '';
   const lastMessage = messages[messages.length - 1]?.content;
-  console.log(projectId,"projectId");
   if (lastMessage) {
     // Replace `1` with your actual project_id or make it dynamic.
     const projectId1 = '1';

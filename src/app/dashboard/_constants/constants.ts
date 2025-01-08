@@ -16,17 +16,17 @@ export const DROPDOWN_OPTIONS: DropdownOption[] = [
   {
     id: 'git_https',
     label: 'Git Public Repo - Https',
-    fields: ['Git URL', 'Branch'],
+    fields: ['Git URL', 'Branch','Artifact Name'],
   },
   {
     id: 'git_https_pat',
     label: 'Git with Https and PAT',
-    fields: ['Git URL', 'PAT', 'Branch'],
+    fields: ['Git URL', 'PAT', 'Branch', 'Artifact Name'],
   },
   {
     id: 'git_ssh_pat',
     label: 'Git with SSH and PAT',
-    fields: ['SSH URL', 'PAT'],
+    fields: ['SSH URL', 'PAT', 'Artifact Name'],
   },  
   // {
   //   id: "git_ssh_key",

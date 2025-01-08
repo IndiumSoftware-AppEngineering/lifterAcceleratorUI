@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       project_id,
       created_by,
       created_on,
-      status, // Ensure status is included
+      status, 
       artifact_type_id
     } = body;
 

@@ -3,7 +3,7 @@ import { query } from '@/lib/db'; // Adjust the import path based on your projec
 
 export async function POST(request: Request) {
   try {
-    const { fileName } = await request.json();
+    const { fileName, projectId } = await request.json();
 
     // Insert the file name into the artifact table
     const result = await query({
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING id
       `,
-      values: [fileName, 2, '{}', 1, 1, 'pending', true, 'user'], // Replace placeholders with actual values
+      values: [fileName, 2, '{}', 1, projectId, 'SUBMITTED', true, 'user'], // Replace placeholders with actual values
     });
 
     const artifactId = result.rows[0].id;
