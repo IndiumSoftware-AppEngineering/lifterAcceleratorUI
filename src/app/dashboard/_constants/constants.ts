@@ -1,11 +1,11 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
-import LanguageIcon from '@mui/icons-material/Language';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { DropdownOption } from './type';
 
 export const ARTIFACT_OPTIONS = [
   { id: 'github', Icon: GitHubIcon, label: 'GitHub' },
-  { id: 'globe', Icon: LanguageIcon, label: 'Globe' },
+  { id: 'file_upload', Icon: DriveFolderUploadIcon, label: 'FileUpload' },
   { id: 'ellipsis', Icon: MoreHorizIcon, label: 'More Options' },
 ];
 

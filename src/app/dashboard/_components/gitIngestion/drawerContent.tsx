@@ -7,8 +7,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ArtifactSelector } from "./artifactSelector";
 import { DropdownMenuOptions } from "./dropdownMenuOptions";
 import { ChevronDown } from "lucide-react";
-import WebScrapper from "../webScrapperIngestion/webScrapper";
+// import WebScrapper from "../webScrapperIngestion/webScrapper";
 import { ArtifactDrawerContentProps } from "../../_constants/type";
+import DocumentUpload from "@/app/extractionCard/_components/documentUpload";
 
 export function ArtifactIngestionDrawerContent({
   onCancel,
@@ -104,7 +105,7 @@ export function ArtifactIngestionDrawerContent({
             onDropdownReset={handleDropdownReset} 
           />
         )}
-        {selectedIcon === "globe" && <WebScrapper />}
+        {selectedIcon === "file_upload" && <DocumentUpload />}
       </div>
       </div>
     </div>
