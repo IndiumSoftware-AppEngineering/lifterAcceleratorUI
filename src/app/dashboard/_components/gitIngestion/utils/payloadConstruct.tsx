@@ -9,7 +9,7 @@ export const constructPayload = (selectedOption: string, formData: Record<string
         return {
           url: formData["Git URL"],
           branch: formData["Branch"],
-          ingestion_mode: "PUBLIC_HTTPS"
+          ingestionMode: "PUBLIC_HTTPS"
         };
   
       case "git_https_pat":
@@ -18,7 +18,7 @@ export const constructPayload = (selectedOption: string, formData: Record<string
           personalAccessToken: formData["PAT"],
           branch: formData["Branch"],
           userName: "nirai",
-          ingestion_mode: "PRIVATE_HTTPS",
+          ingestionMode: "PRIVATE_HTTPS",
           ...commonFields,
         };
   
@@ -28,7 +28,7 @@ export const constructPayload = (selectedOption: string, formData: Record<string
           url: formData["SSH URL"],
           personalAccessToken: formData["PAT"],
           userName: "nirai",
-          ingestion_mode: "PRIVATE_SSH_PW",
+          ingestionMode: "PRIVATE_SSH_PW",
         };
   
       case "git_ssh_key":
@@ -43,7 +43,7 @@ export const constructPayload = (selectedOption: string, formData: Record<string
       case "git_zip":
         return {
           zip: formData["Upload Zip"],
-          ingestion_mode:"ZIP",
+          ingestionMode:"ZIP",
           ...commonFields,
         };
   

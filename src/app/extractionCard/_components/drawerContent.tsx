@@ -3,13 +3,14 @@ import { ArtifactCard } from "@/components/common/cards/artifactCard";
 import { projectNameProp } from "../_constants/type";
 import { usePathname } from "next/navigation";
 
-export function ViewArtifactDrawer({ projectName }: projectNameProp) {
+export function ViewArtifactDrawer({ projectName, isOpen }: projectNameProp) {
   const [artifacts, setArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const id = usePathname().split("/").pop();
   useEffect(() => {
     // Fetch artifact data from the API
+    if (isOpen) {
     async function fetchArtifacts() {
       
       try {
@@ -29,9 +30,9 @@ export function ViewArtifactDrawer({ projectName }: projectNameProp) {
         setLoading(false);
       }
     }
-
     fetchArtifacts();
-  }, []);
+  }
+  }, [isOpen]);
 
   return (
     <div className="p-6 space-y-4">
