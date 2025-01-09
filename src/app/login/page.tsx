@@ -8,6 +8,8 @@ import { useLogin } from "./_api/useLogin";
 import {useForgotPassword} from "./_api/useForgotPassword"
 import SignInButton from "./signInButton";
 import InputField from "./inputFields";
+import { useAppContext } from "@/context";
+import { setAuthCookie } from "@/utils/auth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
@@ -29,6 +31,7 @@ export default function LoginForm() {
   const { login, error: loginError } = useLogin();
   const { forgotPassword, error: forgotPasswordError } = useForgotPassword();
 
+  const {setAuthenticated} = useAppContext()
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
@@ -101,6 +104,7 @@ export default function LoginForm() {
         setSuccessMessage("Password Updated")
         setTimeout(() => {
           setSuccessMessage(null);
+          setAuthenticated(true)
           router.push("/login");
         }, 1000);
       }
@@ -112,9 +116,11 @@ export default function LoginForm() {
   
       const loginResult = await login(email, password);
       if (loginResult && loginResult.message === "Login successful") {
+        await setAuthCookie(true);
         setSuccessMessage("Login successful");
         setTimeout(() => {
           setSuccessMessage(null);
+          setAuthenticated(true);
           router.push("/dashboard");
         }, 1500);
       }
