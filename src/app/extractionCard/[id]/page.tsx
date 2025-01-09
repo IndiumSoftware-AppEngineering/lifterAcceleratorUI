@@ -192,7 +192,7 @@ export default function ExtractionCard({ params }: { params: Promise<{ id: strin
           >
             {drawerContent === "viewArtifacts" &&
               <>
-                <ViewArtifactDrawer projectName={project.name} />
+                <ViewArtifactDrawer projectName={project.name} isOpen={viewArtifacts}/>
                 <div className="flex justify-center items-center">
                   <button
                     className="px-6 py-2 text-sm font-semibold rounded-md"

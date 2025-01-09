@@ -1,5 +1,6 @@
 export interface projectNameProp {
   projectName: string;
+  isOpen: boolean;
 }
 
 export interface KeyValuePair {
