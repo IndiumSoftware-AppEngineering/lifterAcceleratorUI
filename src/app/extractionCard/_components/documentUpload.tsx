@@ -16,6 +16,7 @@ export function DocumentUpload() {
   const [error, setError] = useState("");
   const { toast } = useToast();
   const {projectId} = useAppContext();
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const selectedFiles = Array.from(event.target.files);
@@ -46,25 +47,13 @@ export function DocumentUpload() {
     }
 
     try {
-      const artifactResponse = await fetch("http://localhost:3000/api/getArtifactId", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fileName, projectId }),
-      });
-
-      if (!artifactResponse.ok) {
-        throw new Error("Failed to get artifact ID");
-      }
-
-      const artifactData = await artifactResponse.json();
-      const artifactId = artifactData.artifactId;
+      const input = {name:fileName, project_id:projectId, org_id:1}
       const formData = new FormData();
+      formData.append("input", JSON.stringify(input));
       files.forEach((file) => {
         formData.append("files", file); // Append each file
       });
-      const fileUploadResponse = await fetch(`http://localhost:8000/files_nopermission/?artifact_id=${artifactId}`, {
+      const fileUploadResponse = await fetch(`http://localhost:8000/artifact_files/`, {
         method: "POST",
         body: formData, // Send FormData (no need to set Content-Type header)
       });
