@@ -53,7 +53,7 @@ export function DocumentUpload() {
       files.forEach((file) => {
         formData.append("files", file); // Append each file
       });
-      const fileUploadResponse = await fetch(`http://localhost:8000/artifact_files/`, {
+      const fileUploadResponse = await fetch(process.env.ARTIFACT_FILE_URL as string, {
         method: "POST",
         body: formData, // Send FormData (no need to set Content-Type header)
       });

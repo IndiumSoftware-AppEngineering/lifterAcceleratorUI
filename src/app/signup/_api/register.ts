@@ -2,7 +2,7 @@ import { SignupPayload } from "@/app/dashboard/_constants/type";
 
 export async function registerUser(formData: SignupPayload) {
   try {
-    const response = await fetch('http://localhost:3000/api/register', {
+    const response = await fetch(process.env.REGISTER_USER_URL as string, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

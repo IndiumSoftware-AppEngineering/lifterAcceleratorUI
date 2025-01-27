@@ -12,7 +12,7 @@ export interface Project {
 }
 
 async function fetchProjectData(): Promise<Project[]> {
-  const res = await fetch('http://localhost:3000/api/projectDetails');
+  const res = await fetch(process.env.GET_PROJECTS_URL as string);
   if (!res.ok) {
     throw new Error('Failed to fetch project data');
   }

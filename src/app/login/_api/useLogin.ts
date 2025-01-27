@@ -9,7 +9,7 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3000/api/login', {
+      const response = await fetch(process.env.LOGIN_URL as string, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     // Call the Python server to get the context
     const contextResponse = await fetch(
-      `http://localhost:8000/llm-service/embedding/query-embeddings?${queryParams.toString()}`,
+      process.env.EMBEDDING_URL as string+`${queryParams.toString()}`,
       { method: 'GET' }
     );
 
