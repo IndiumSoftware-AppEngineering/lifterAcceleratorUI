@@ -1,6 +1,6 @@
 export const constructPayload = (selectedOption: string, formData: Record<string, string>) => {
     const commonFields = {
-      createdBy: "nirai",
+      createdBy: process.env.DB_CREATEDBY as string,
       createdOn: new Date().toISOString(), 
     };
   
@@ -17,7 +17,7 @@ export const constructPayload = (selectedOption: string, formData: Record<string
           url: formData["Git URL"],
           personalAccessToken: formData["PAT"],
           branch: formData["Branch"],
-          userName: "nirai",
+          userName: process.env.DB_CREATEDBY as string,
           ingestionMode: "PRIVATE_HTTPS",
           ...commonFields,
         };
@@ -27,7 +27,7 @@ export const constructPayload = (selectedOption: string, formData: Record<string
         //   ...commonFields,
           url: formData["SSH URL"],
           personalAccessToken: formData["PAT"],
-          userName: "nirai",
+          userName: process.env.DB_CREATEDBY as string,
           ingestionMode: "PRIVATE_SSH_PW",
         };
   
@@ -35,7 +35,7 @@ export const constructPayload = (selectedOption: string, formData: Record<string
         return {
         //   ...commonFields,
           url: formData["SSH URL"],
-          userName: "nirai",
+          userName: process.env.DB_CREATEDBY as string,
           publicKey: formData["Public Key"],
           ingestion_mode: "PRIVATE_SSH"
         };

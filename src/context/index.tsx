@@ -15,7 +15,7 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-    const [projectId, setProjectId] = useState<string | null>("nirai");
+    const [projectId, setProjectId] = useState<string | null>(process.env.PROJECT_ID as string);
     const [authenticated, setAuthenticated] = useState <boolean> (false);
 
     const value = {
