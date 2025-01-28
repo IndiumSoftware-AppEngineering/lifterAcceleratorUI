@@ -1,0 +1,12 @@
+/* styles.css */
+.custom-input::placeholder {
+    font-style: italic;
+}
+
+.select-placeholder {
+    color: #8B8B8B;
+}
+
+.select-placeholder option:not([value=""]) {
+    color: initial;
+}
