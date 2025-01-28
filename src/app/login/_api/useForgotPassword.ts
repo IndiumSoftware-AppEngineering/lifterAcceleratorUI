@@ -9,7 +9,7 @@ export const useForgotPassword = () => {
     setError(null);
 
     try {
-      const response = await fetch(process.env.FORGOT_PASSWORD_URL as string, {
+      const response = await fetch(process.env.NEXT_PUBLIC_FORGOT_PASSWORD_URL as string, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

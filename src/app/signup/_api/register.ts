@@ -2,7 +2,7 @@ import { SignupPayload } from "@/app/dashboard/_constants/type";
 
 export async function registerUser(formData: SignupPayload) {
   try {
-    const response = await fetch(process.env.REGISTER_USER_URL as string, {
+    const response = await fetch(process.env.NEXT_PUBLIC_REGISTER_USER_URL as string, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

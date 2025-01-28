@@ -7,7 +7,7 @@ export async function GET(
   const id = params.id;
 
   try {
-    const res = await fetch(process.env.PROJECT_DETAILS_URL as string +`${id}`);
+    const res = await fetch(process.env.NEXT_PUBLIC_PROJECT_DETAILS_URL as string +`${id}`);
     if (!res.ok) {
       throw new Error('Failed to fetch project data');
     }

@@ -11,7 +11,7 @@ export interface Project {
   }
   
   export async function fetchProjectById(id: string): Promise<Project | null> {
-    const res = await fetch(process.env.PROJECT_DETAILS_URL as string+`${id}`);
+    const res = await fetch(process.env.NEXT_PUBLIC_PROJECT_DETAILS_URL as string+`${id}`);
     if (!res.ok) {
       return null;
     }

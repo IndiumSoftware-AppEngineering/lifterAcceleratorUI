@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     // Call the Python server to get the context
     const contextResponse = await fetch(
-      process.env.EMBEDDING_URL as string+`${queryParams.toString()}`,
+      process.env.NEXT_PUBLIC_EMBEDDING_URL as string+`${queryParams.toString()}`,
       { method: 'GET' }
     );
 

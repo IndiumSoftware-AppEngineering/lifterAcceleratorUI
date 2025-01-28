@@ -9,7 +9,7 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch(process.env.LOGIN_URL as string, {
+      const response = await fetch(process.env.NEXT_PUBLIC_LOGIN_URL as string, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
